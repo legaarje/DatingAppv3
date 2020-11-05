@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="col" id="profileList">
+        <h2>Profiles</h2>
+        <div th:each="allProfiles : ${profile}">
+            <h th:text="${allProfiles}" />
+        </div>
+    </div>
+
+    <div id="form-container">
+        <form id="createProfileForm" action="/createprofile" method="post" enctype="multipart/form-data">
+            <label for="createProfileForm"></label>
+            <input type="text" id="pName" name="pName" placeholder="Navn..."><br><br>
+            <input type="text" id="pGender" name="pGender" placeholder="Køn..."><br><br>
+            <input type="text" id="pEmail" name="pEmail" placeholder="Email..."><br><br>
+            <input type="text" id="pDescription" name="pDescription" placeholder="Om dig selv..."><br><br>
+            <input type="submit" id="submit-form" value="Lav profil!">
+        </form>
+
+        <form id="toSearchProfile" action="/searchprofiles" method="get">
+            <input type="submit" id="search-form" value="Søg efter profiler">
+        </form>
+
+        <form id="delete-form" action="/deleteprofile" method="post">
+            <input type="text" id="delete" name="delete" placeholder="slet bruger..."><br><br>
+            <input type="submit" value="deleteprofile">
+        </form>
+    </div>
+
+    <div id="edit-container">
+        <form id="editProfile" action="/editprofile" method="post" enctype="multipart/form-data">
+            <label for="editProfile"></label>
+            <input type="int" id="eId" name="eId" placeholder="Vælg bruger..."><br><br>
+            <input type="text" id="eName" name="eName" placeholder="Ændre navn..."><br><br>
+            <input type="text" id="eGender" name="eGender" placeholder="Ændre Køn..."><br><br>
+            <input type="text" id="eEmail" name="eEmail" placeholder="Ændre Email..."><br><br>
+            <input type="text" id="eDescription" name="eDescription" placeholder="Ændre Om dig selv..."><br><br>
+            <input type="submit" id="edit-form" value="Ændre profil!">
+        </form>
+    </div>
+</body>
+</html>
