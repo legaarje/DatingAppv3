@@ -16,6 +16,8 @@ public class DatingController {
 
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
+    Profile profile = new Profile(0,null,null,null,null,null);
+
 
     @GetMapping("/")
     public String index(Model profileModel){
@@ -25,8 +27,14 @@ public class DatingController {
 
     @PostMapping("/createprofile")
     public String createProfile(WebRequest createProfileData) throws SQLException {
+        String gender = null;
         String name = createProfileData.getParameter("pName");
-        String gender = createProfileData.getParameter("pGender");
+        if (createProfileData.getParameter("pGender") == createProfileData.getParameter("pGenderMand")) {
+            gender = "Kvinde";
+        } else {
+            gender = "Mand";
+        }
+       // String gender = createProfileData.getParameter("pGender");
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         rp.createProfile(name,gender,email,description);
@@ -47,9 +55,15 @@ public class DatingController {
     @PostMapping("/editprofile")
     public String editProfile(WebRequest editProfile) {
         try {
+            String gender = null;
             int id = Integer.parseInt(editProfile.getParameter("eId"));
             String name = editProfile.getParameter("eName");
-            String gender = editProfile.getParameter("eGender");
+            //String gender = editProfile.getParameter("eGender");
+            if (editProfile.getParameter("pGender") == editProfile.getParameter("pGenderMand")) {
+                gender = "Kvinde";
+            } else {
+                gender = "Mand";
+            }
             String email = editProfile.getParameter("eEmail");
             String description = editProfile.getParameter("eDescription");
             rp.editProfile(id,name,gender,email,description);

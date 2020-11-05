@@ -26,7 +26,7 @@ public class ProfileRepository {
         allProfiles.clear();
         try {
             //lavet et statement og eksekvere en query
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles;");
+            PreparedStatement ps = establishConnection().prepareStatement(" SELECT * FROM profiles;");
             ResultSet rs = ps.executeQuery();
 
             //lave resultattet om til objekter, og derefter ind i en arrayliste
@@ -36,7 +36,8 @@ public class ProfileRepository {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5));
+                        rs.getString(5),
+                        rs.getBlob(6));
                 allProfiles.add(tmp);
             }
 
@@ -70,7 +71,8 @@ public class ProfileRepository {
                     rss.getString(2),
                     rss.getString(3),
                     rss.getString(4),
-                    rss.getString(5));
+                    rss.getString(5),
+                    rss.getBlob(6));
             allProfiles.add(temp);
 
         }
@@ -104,7 +106,8 @@ public class ProfileRepository {
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
-                    rs.getString(5));
+                    rs.getString(5),
+                    rs.getBlob(6));
             allProfiles.add(temp);
         }
         return allProfiles;
