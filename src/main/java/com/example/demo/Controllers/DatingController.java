@@ -1,10 +1,12 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Models.contactForm;
 import com.example.demo.Models.Profile;
 import com.example.demo.Repositories.ProfileRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 import java.sql.SQLException;
@@ -84,4 +86,20 @@ public class DatingController {
         searchModel.addAttribute("profile",allProfiles);
         return "profileList";
     }
+
+    @GetMapping("/contactForm")
+    public String contactForm(Model model) {
+        model.addAttribute("contactForm", new contactForm());
+        return "Login";
+    }
+
+    @PostMapping("/contactForm")
+    public String contactSubmit(@ModelAttribute contactForm contactForm, Model model) {
+        model.addAttribute("contactForm", contactForm);
+        // Tilføj ArrayList og / eller FileWriter her?
+        return "contactReceipt";
+    }
 }
+
+
+
