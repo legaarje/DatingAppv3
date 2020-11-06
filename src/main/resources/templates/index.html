@@ -1,26 +1,66 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:insert="fragments/header :: header"></div>
+    <div th:insert="fragments/menu :: menu"></div>
+
+    <title>Dating app</title>
 </head>
+
+
 <body>
 
-    <div class="col" id="profileList">
-        <h2>Profiles</h2>
+        <div th:insert="fragments/jumbotron :: jumbotron"></div>
+
+
+    <div class="container" id="profileList">
+
+        <!-- Indsæt indhold her -->
+        <h2>Opret din gratis profil her</h2>
+
+
+        <div class="row">
+            <div class="col-md-8">
+
+
         <div th:each="allProfiles : ${profile}">
             <h th:text="${allProfiles}" />
         </div>
-    </div>
 
-    <div id="form-container">
+
+    <div id="form-group">
         <form id="createProfileForm" action="/createprofile" method="post" enctype="multipart/form-data">
-            <label for="createProfileForm"></label>
-            <input type="text" id="pName" name="pName" placeholder="Navn..."><br>
+            <label for="createProfileForm">Indtast brugernavn</label>
+            <div class="form-row">
+                <div class="col">
+            <input type="text" id="pName" name="pName" placeholder="Brugernavn..."><br>
+                </div>
+            </div>
+            <br>
             <input type="radio" name="pGender" value="pGenderMand"> Mand
             <input type="radio" name="pGender" value="pGenderKvinde"> Kvinde<br>
-            <input type="text" id="pEmail" name="pEmail" placeholder="Email..."><br><br>
-            <input type="text" id="pDescription" name="pDescription" placeholder="Om dig selv..."><br><br>
+            <br>
+
+            <div class="form-row">
+                <div class="col">
+                <label for="createProfileForm">Indtast Email</label>
+                </div>
+            </div>
+            <input type="text" id="pEmail" name="pEmail" placeholder="example@example.com"><br><br>
+
+            <div class="form-row">
+                <div class="col">
+                    <label for="createProfileForm">Indtast beskrivelse</label>
+                </div>
+            </div>
+            <textarea rows="5" type="text" id="pDescription" name="pDescription" placeholder="Skriv din profil her..."></textarea>
+                <br><br>
+
+
+
+
             <input type="submit" id="submit-form" value="Lav profil!">
         </form>
 
@@ -47,5 +87,11 @@
             <input type="submit" id="edit-form" value="Ændre profil!">
         </form>
     </div>
+    </div>
+    </div>
+    </div>
+
+
+
 </body>
 </html>

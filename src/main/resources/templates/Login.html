@@ -1,0 +1,52 @@
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<title>Login</title>
+
+<div th:insert="fragments/header :: header"></div>
+
+<div th:insert="fragments/menu :: menu"></div>
+
+<body>
+
+<div th:insert="fragments/jumbotron :: jumbotron"></div>
+
+    <div class="container">
+
+        <!-- Indsæt indhold her -->
+        <h2>Indtast dit brugernavn og kodeord</h2>
+
+        <div class="row">
+            <div class="col-md-8">
+                <form action="#" th:action="@{/contactForm}" th:object="${contactForm}" method="post">
+                    <div class="form-group">
+                        <label for="firstName">Navn</label>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" th:field="*{firstName}"id="firstName" class="form-control" placeholder="Fornavn">
+                            </div>
+                            <div class="col">
+                                <input type="text"th:field="*{lastName}" class="form-control" placeholder="Efternavn">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text"th:field="*{email}" class="form-control" id="email" placeholder="example@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Besked</label>
+                        <textarea rows="5" type="text"th:field="*{message}" class="form-control" id="message" placeholder="Skriv din besked her"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+
+    </div> <!-- /container -->
+
+
+</html>
