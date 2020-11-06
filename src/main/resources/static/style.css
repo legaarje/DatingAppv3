@@ -1,64 +1,89 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
 
 h1, h2, h3, h4, h5, h6{
-    color: #208C1F;
-    font-family: 'Fredoka One', cursive;
+    color: #555555;
+    font-family: 'Courier Prime', serif;
 }
 
 body{
     padding-top: 60px;
+    background-color: #ffccff;
+    font-family: 'Courier Prime', serif;
+
 }
 
 .jumbotron {
-    background-image: url(images/datingbanner.jpg);
-    background-size: cover;
-    padding-top: 5%;
-    height: auto;
-    padding-bottom: 15%;
-}
-
-.jumbotron-thin{
-    height: 60%;
+background-image: url(images/datingbanner.jpg);
+background-size: cover;
+padding-top: 5%;
+height: 100%;
+padding-bottom: 17%;
+background-color: #ffccff;
 }
 
 .btn{
-    background-color: #FF8B30;
-    border-color: #FF8B30;
+background-color: #ffccff;
+border-color: #ffccff;
 }
 
 .btn:hover{
-    background-color: #009900;
-    border-color: #009900;
+background-color: #ff0099;
+border-color: #ff0099;
 }
 
 .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+font-size: 1.125rem;
+text-anchor: middle;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
 }
 
 .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-    background-color: #009900; !important;
-    color: #FFFFFF; !important;
+background-color: #ff0099; !important;
+color: #FFFFFF; !important;
+font-family: 'Courier Prime', serif; !important;
+}
+
+.navbar {
+background-color: #ffccff;
+color: #FFFFFF; !important;
+font-family: 'Courier Prime', serif; !important;
+}
+
+.navbar .navbar-nav .dropdown-menu {
+background-color: #ffccff;
+border-color: #ff0099;
+}
+
+.navbar .navbar-nav .dropdown-menu .dropdown-item {
+    color: #555555;
+}
+.navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
+.navbar .navbar-nav .dropdown-menu .dropdown-item:focus,
+.navbar .navbar-nav .dropdown-menu .dropdown-item.active {
+    color: #ffffff;
+    background-color: #ff0099;
+}
+.navbar .navbar-nav .dropdown-menu .dropdown-divider {
+    border-top-color: #ff0099;
 }
 
 @media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-    }
+.bd-placeholder-img-lg {
+    font-size: 3.5rem;
+}
 }
 
 .display-3{
-    font-size: 5em;
+font-size: 5em;
 }
 
 .video-container{
-    width: 100%;
-    height: auto;
+width: 100%;
+height: auto;
 }
 
 /*  ----------- ICONS --------------  */
