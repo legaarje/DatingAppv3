@@ -1,14 +1,14 @@
 package com.example.demo.Controllers;
 
-import com.example.demo.Models.contactForm;
 import com.example.demo.Models.Profile;
 import com.example.demo.Repositories.ProfileRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
+
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,29 +17,31 @@ import java.util.List;
 public class DatingController {
 
     ProfileRepository rp = new ProfileRepository();
-    List<Profile> allProfiles = new ArrayList<>();
+    List<Profile> listAllProfiles = rp.listAllProfiles();
     Profile profile = new Profile(0,null,null,null,null,null);
 
 
     @GetMapping("/")
     public String index(Model profileModel){
-        profileModel.addAttribute("profile", rp.listAllProfiles());
+        profileModel.addAttribute("profiles", listAllProfiles);
         return "index";
     }
 
     @PostMapping("/createprofile")
     public String createProfile(WebRequest createProfileData) throws SQLException {
-        String gender = null;
+
         String name = createProfileData.getParameter("pName");
+        String gender = null;
         if (createProfileData.getParameter("pGender") == createProfileData.getParameter("pGenderMand")) {
             gender = "Kvinde";
         } else {
             gender = "Mand";
         }
-       // String gender = createProfileData.getParameter("pGender");
+        String password = createProfileData.getParameter("pPassword");
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
-        rp.createProfile(name,gender,email,description);
+        // Blob picture = (Blob) createProfileData.getAttribute("pPicture"); // FileInputStream ?
+        rp.createProfile(name, email, password, gender, description);
         return "redirect:/";
     }
 
@@ -79,15 +81,27 @@ public class DatingController {
     public String searchProfiles(Model searchModel, WebRequest searchProfile){
         String gender = searchProfile.getParameter("sGender");
         try {
-            allProfiles = rp.searchProfile(gender);
+            listAllProfiles = rp.searchProfile(gender);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        searchModel.addAttribute("profile",allProfiles);
+        searchModel.addAttribute("profile",listAllProfiles);
         return "profileList";
     }
 
-    @GetMapping("/contactForm")
+    @PostMapping("login")
+    public String login(Model searchModel, WebRequest login){
+        String name = login.getParameter("pName");
+        try {
+            listAllProfiles = rp.searchProfile(name);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        searchModel.addAttribute("profile",listAllProfiles);
+        return "profileList";
+    }
+
+/*    @GetMapping("/contactForm")
     public String contactForm(Model model) {
         model.addAttribute("contactForm", new contactForm());
         return "Login";
@@ -99,6 +113,9 @@ public class DatingController {
         // Tilføj ArrayList og / eller FileWriter her?
         return "contactReceipt";
     }
+
+ */
+
 }
 
 

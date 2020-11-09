@@ -74,10 +74,12 @@
                     <br><br></p>
 
                 <h2>Profiler</h2>
-                <div th:each="allProfiles : ${profile}">
-                    <h th:text="${allProfiles}" />
+
+                    <tr th:each="profile : ${profiles}">
+                        <td th:text="${profile}"></td>
+                    </tr>
                     <br><br>
-                </div>
+
             </div>
         </div>
     </div> <!-- /container -->

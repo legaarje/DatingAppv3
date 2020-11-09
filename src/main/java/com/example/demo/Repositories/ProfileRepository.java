@@ -2,6 +2,9 @@ package com.example.demo.Repositories;
 
 import com.example.demo.Models.Profile;
 import org.springframework.stereotype.Repository;
+
+import java.io.File;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,7 +21,7 @@ public class ProfileRepository {
 
     //Denne metode laver forbindelsen til mysql databasen
     private Connection establishConnection() throws SQLException {
-        Connection connectionToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app", "root", "Orange10");
+        Connection connectionToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app", "root", "1qaz2wsx");
         return connectionToDB;
     }
 
@@ -37,7 +40,7 @@ public class ProfileRepository {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getBlob(6));
+                        rs.getString(6));
                 allProfiles.add(tmp);
             }
 
@@ -48,15 +51,16 @@ public class ProfileRepository {
     }
 
 
-    public void createProfile(String pName, String pGender, String pEmail, String pDescription) throws SQLException {
+    public void createProfile(String pName, String pEmail, String pPassword, String pGender, String pDescription) throws SQLException {
         allProfiles.clear();
         //lavet et statement og eksekvere en query
-        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name,gender,email,description) VALUES (?,?,?,?);");
+        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, email, password, gender, description) VALUES (?,?,?,?,?);");
 
         ps.setString(1,pName);
-        ps.setString(2,pGender);
-        ps.setString(3,pEmail);
-        ps.setString(4,pDescription);
+        ps.setString(2,pEmail);
+        ps.setString(3,pPassword);
+        ps.setString(4,pGender);
+        ps.setString(5,pDescription);
 
         int rs = ps.executeUpdate();
 
@@ -72,7 +76,7 @@ public class ProfileRepository {
                     rss.getString(3),
                     rss.getString(4),
                     rss.getString(5),
-                    rss.getBlob(6));
+                    rss.getString(6));
             allProfiles.add(temp);
 
         }
@@ -107,7 +111,21 @@ public class ProfileRepository {
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5),
-                    rs.getBlob(6));
+                    rs.getString(6));
+            allProfiles.add(temp);
+        }
+        return allProfiles;
+    }
+
+    public List<Profile> searchLogin(String name) throws SQLException {
+        allProfiles.clear();
+        PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where name like ?");
+        ps.setString(1,"%" + name + "%");
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Profile temp = new Profile(
+                    rs.getString(1));
             allProfiles.add(temp);
         }
         return allProfiles;
