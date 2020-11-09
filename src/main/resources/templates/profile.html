@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:insert="fragments/header :: header"></div>
+    <div th:insert="fragments/menu :: menu"></div>
+
+    <title>KEA Dating - Profile</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+<div th:insert="fragments/jumbotron :: jumbotron">
+</div>
+
+<div class="container" id="main">
+
+    <!-- Indsæt indhold her -->
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <div id="form-container">
+                <h2>Profiler</h2>
+                <tr th:each="profile : ${profile}">
+                    <td th:text="${profile.name}" /><br>
+                    <td th:text="${profile.gender}" /><br>
+                    <td th:text="${profile.description}" /><br><br>
+                </tr>
+            </div>
+
+            <br><br>
+
+            <form id="toMainPage" action="/" method="get">
+                <button class="btn btn-primary" type="submit"><-- Tilbage</button>
+            </form>
+        </div>
+    </div>
+</div> <!-- /container -->
+<br>
+<hr>
+</body>
+<div th:insert="fragments/footer :: footer"></div>
+
+</html>

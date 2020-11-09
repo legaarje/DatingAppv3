@@ -23,28 +23,34 @@
 
                 <div id="form-container">
                     <h2>Opret din gratis profil her</h2>
-                    <form id="createProfileForm" action="/createprofile" method="post" enctype="multipart/form-data">
-                        <label for="createProfileForm"></label>
-                        <input type="radio" name="pGender" value="pGenderMand"> Mand
-                        <input type="radio" name="pGender" value="pGenderKvinde"> Kvinde<br>
-                        <input type="text" id="pName" name="pName" placeholder="Navn..."><br>
-                        <input type="text" id="pKodeord" name="pKodeord" placeholder="Kodeord..."><br>
-                        <input type="text" id="pEmail" name="pEmail" placeholder="Mailadresse..."><br>
-                        <input type="text" id="pDescription" name="pDescription" placeholder="Om dig selv..."><br><br>
-                        <input type="submit" id="submit-form" value="Opret profil">
+                    <form id="createProfileForm" action="/createprofile"  method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="createProfileForm"></label>
+                            <input type="radio" name="pGender" value="pGenderMand"> Mand
+                            <input type="radio" name="pGender" value="pGenderKvinde"> Kvinde<br>
+                            <input type="text" id="pName" name="pName" placeholder="Navn..."><br>
+                            <input type="text" id="pKodeord" name="pKodeord" placeholder="Kodeord..."><br>
+                            <input type="text" id="pEmail" name="pEmail" placeholder="Mailadresse..."><br>
+                            <input type="text" id="pDescription" name="pDescription" placeholder="Om dig selv..."><br>
+                            <!-- <input type="submit" id="submit-form" value="Opret profil"> -->
+                        </div>
+                        <button class="btn btn-primary" type="submit">Opret profil</button>
                     </form>
+
 
                     <br><br><br>
                     <h2>Søg profiler</h2>
                     <form id="toSearchProfile" action="/searchprofiles" method="get">
-                        <input type="submit" id="search-form" value="Kom i gang">
+                        <button class="btn btn-primary" id="search-form" type="submit">Søg nu</button>
                     </form>
 
                     <br><br><br>
                     <h2>Slet profil</h2>
                     <form id="delete-form" action="/deleteprofile" method="post">
-                        <input type="text" id="delete" name="delete" placeholder="Vælg bruger ID..."><br><br>
-                        <input type="submit" value="Slet profil">
+                        <div class="form-group">
+                            <input type="text" id="delete" name="delete" placeholder="Vælg bruger ID..."><br><br>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Slet profil</button>
                     </form>
                 </div>
 
@@ -52,17 +58,20 @@
 
                 <div id="edit-container">
                     <h2>Ret profil</h2>
-                    <form id="editProfile" action="/editprofile" method="post" enctype="multipart/form-data">
-                        <label for="editProfile"></label>
-                        <input type="radio" name="eGender" value="eGenderMand"> Mand
-                        <input type="radio" name="eGender" value="eGenderKvinde"> Kvinde<br>
-                        <!--<input type="text" id="eGender" name="eGender" placeholder="Ændre Køn..."><br><br> -->
-                        <input type="int" id="eId" name="eId" placeholder="Vælg bruger ID..."><br>
-                        <input type="text" id="eName" name="eName" placeholder="Ændre navn..."><br>
-                        <input type="text" id="eEmail" name="eEmail" placeholder="Ændre mailadresse..."><br>
-                        <input type="text" id="eDescription" name="eDescription" placeholder="Ændre beskrivelse..."><br><br>
-                        <input type="submit" id="edit-form" value="Gem profil">
+                    <div id="editProfile" action="/editprofile" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="editProfile"></label>
+                            <input type="radio" name="eGender" value="eGenderMand"> Mand
+                            <input type="radio" name="eGender" value="eGenderKvinde"> Kvinde<br>
+                            <!--<input type="text" id="eGender" name="eGender" placeholder="Ændre Køn..."><br><br> -->
+                            <input type="int" id="eId" name="eId" placeholder="Vælg bruger ID..."><br>
+                            <input type="text" id="eName" name="eName" placeholder="Ændre navn..."><br>
+                            <input type="text" id="eEmail" name="eEmail" placeholder="Ændre mailadresse..."><br>
+                            <input type="text" id="eDescription" name="eDescription" placeholder="Ændre beskrivelse..."><br><br>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Gem profil</button>
                     </form>
+                    </div>
                 </div>
 
                 <br>
@@ -76,9 +85,11 @@
 
                 <h2>Profiler</h2>
 
-                    <tr th:each="profile : ${profiles}">
-                        <td th:text="${profile}"></td>
-                    </tr>
+                <tr th:each="profile : ${profile}">
+                    <td th:text="${profile.name}" /><br>
+                    <td th:text="${profile.gender}" /><br>
+                    <td th:text="${profile.description}" /><br><br>
+                </tr>
                     <br><br>
 
             </div>

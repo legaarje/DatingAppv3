@@ -17,7 +17,6 @@ public class DatingController {
 
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
-    List<Profile> searchLogin = new ArrayList<>();
     // Profile profile = new Profile(0,null,null,null,null,null, 0, null);
 
 
@@ -41,8 +40,8 @@ public class DatingController {
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        rp.createProfile(name, kodeord, gender,email,description,admin);
-        return "redirect:/";
+        rp.createProfile(name, kodeord, gender ,email, description, admin);
+        return "profilelist";
     }
 
     @PostMapping("/correctlogin")
@@ -55,6 +54,24 @@ public class DatingController {
        // rp.searchLogin(name, kodeord).getAdmin();
 
         return "main";
+    }
+    @PostMapping("/main")
+    public String searchGender(Model searchModel, WebRequest searchProfile){
+            String gender = null;
+
+        if (searchProfile.getParameter("pGender") == searchProfile.getParameter("pGenderMand")) {
+            gender = "Mand";
+        } else {
+            gender = "Kvinde";
+        }
+
+        try {
+            allProfiles = rp.searchProfile(gender);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        searchModel.addAttribute("profile", allProfiles);
+    return "main";
     }
 
     @PostMapping("/deleteprofile")
@@ -107,6 +124,12 @@ public class DatingController {
         //model.addAttribute("pLogin", new login());
         //model.addAttribute("pName", "pKodeord");
         return "login";
+    }
+
+    @GetMapping("/profile")
+    public String profile(Model profileModel){
+        profileModel.addAttribute("profile", rp.listAllProfiles());
+        return "profile";
     }
 
     /*

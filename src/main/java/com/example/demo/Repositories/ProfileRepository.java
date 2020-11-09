@@ -19,7 +19,7 @@ public class ProfileRepository {
 
     //Denne metode laver forbindelsen til mysql databasen
     private Connection establishConnection() throws SQLException {
-        Connection connectionToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app", "root", "Orange10");
+        Connection connectionToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app", "root", "1qaz2wsx");
         return connectionToDB;
     }
 
