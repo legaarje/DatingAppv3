@@ -18,7 +18,7 @@ public class DatingController {
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> searchLogin = new ArrayList<>();
-    Profile profile = new Profile(0,null,null,null,null,null, null, null);
+    Profile profile = new Profile(0,null,null,null,null,null, 0, null);
 
 
     @GetMapping("/")
@@ -30,6 +30,7 @@ public class DatingController {
     @PostMapping("/createprofile")
     public String createProfile(WebRequest createProfileData) throws SQLException {
         String gender = null;
+        int admin = 0;
         String name = createProfileData.getParameter("pName");
         if (createProfileData.getParameter("pGender") == createProfileData.getParameter("pGenderMand")) {
             gender = "Kvinde";
@@ -40,7 +41,7 @@ public class DatingController {
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        rp.createProfile(name, kodeord, gender,email,description);
+        rp.createProfile(name, kodeord, gender,email,description,admin);
         return "redirect:/";
     }
 

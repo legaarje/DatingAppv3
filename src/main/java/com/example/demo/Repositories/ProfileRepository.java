@@ -39,7 +39,7 @@ public class ProfileRepository {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getBoolean(7),
+                        rs.getInt(7),
                         rs.getBlob(8));
                 allProfiles.add(tmp);
             }
@@ -51,7 +51,7 @@ public class ProfileRepository {
     }
 
 
-    public void createProfile(String pName, String pKodeord, String pGender, String pEmail, String pDescription) throws SQLException {
+    public void createProfile(String pName, String pKodeord, String pGender, String pEmail, String pDescription, int pAdmin) throws SQLException {
         allProfiles.clear();
         //lavet et statement og eksekvere en query
         PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, kodeord, gender,email,description) VALUES (?,?,?,?,?);");
@@ -68,7 +68,6 @@ public class ProfileRepository {
         pss.setInt(1,rs);
         ResultSet rss = pss.executeQuery();
 
-        //lave resultattet om til objekter, og derefter ind i en arrayliste
         while (rss.next()) {
             Profile temp = new Profile(
                     rss.getInt(1),
@@ -77,7 +76,7 @@ public class ProfileRepository {
                     rss.getString(4),
                     rss.getString(5),
                     rss.getString(6),
-                    rss.getBoolean(7),
+                    rss.getInt(7),
                     rss.getBlob(8));
             allProfiles.add(temp);
 
@@ -114,7 +113,7 @@ public class ProfileRepository {
                     rs.getString(4),
                     rs.getString(5),
                     rs.getString(6),
-                    rs.getBoolean(7),
+                    rs.getInt(7),
                     rs.getBlob(8));
             allProfiles.add(temp);
         }
@@ -138,7 +137,7 @@ public class ProfileRepository {
                     rs.getString(4),
                     rs.getString(5),
                     rs.getString(6),
-                    rs.getBoolean(7),
+                    rs.getInt(7),
                     rs.getBlob(8));
 
         }

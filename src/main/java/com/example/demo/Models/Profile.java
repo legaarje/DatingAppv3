@@ -11,9 +11,9 @@ public class Profile {
     private String email;
     private String description;
     private Blob picture;
-    private Boolean admin;
+    private int admin;
 
-    public Profile(int id, String name, String kodeord, String gender, String email, String description, Boolean admin, Blob picture) {
+    public Profile(int id, String name, String kodeord, String gender, String email, String description, int admin, Blob picture) {
         this.id = id;
         this.name = name;
         this.kodeord = kodeord;
@@ -85,7 +85,7 @@ public class Profile {
         this.kodeord = kodeord;
     }
 
-    public Boolean getAdmin() {
+    public int getAdmin() {
         return admin;
     }
 
