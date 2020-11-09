@@ -56,7 +56,7 @@
                         <label for="editProfile"></label>
                         <input type="radio" name="eGender" value="eGenderMand"> Mand
                         <input type="radio" name="eGender" value="eGenderKvinde"> Kvinde<br>
-                        <!--<input type="text" id="eGender" name="eGender" placeholder="Ændre Køn..."><br><br> -->
+
                         <input type="int" id="eId" name="eId" placeholder="Vælg bruger ID..."><br>
                         <input type="text" id="eName" name="eName" placeholder="Ændre navn..."><br>
                         <input type="text" id="eEmail" name="eEmail" placeholder="Ændre mailadresse..."><br>
@@ -75,11 +75,10 @@
                     <br><br></p>
 
                 <h2>Profiler</h2>
-
-                    <tr th:each="profile : ${profiles}">
-                        <td th:text="${profile}"></td>
+                    <tr th:each="profile : ${profile}">
+                        <td th:text="${profile}"></td><br><br>
                     </tr>
-                    <br><br>
+
 
             </div>
         </div>

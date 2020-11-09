@@ -18,7 +18,6 @@ public class DatingController {
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> searchLogin = new ArrayList<>();
-    // Profile profile = new Profile(0,null,null,null,null,null, 0, null);
 
 
     @GetMapping("/")
@@ -29,42 +28,51 @@ public class DatingController {
 
     @PostMapping("/createprofile")
     public String createProfile(WebRequest createProfileData) throws SQLException {
-        String gender = null;
+        String gender = "";
         int admin = 0;
         String name = createProfileData.getParameter("pName");
-        if (createProfileData.getParameter("pGender") == createProfileData.getParameter("pGenderMand")) {
+        if (createProfileData.getParameter("pGender") != createProfileData.getParameter("pGenderMand")) {
             gender = "Mand";
         } else {
             gender = "Kvinde";
         }
-       // String gender = createProfileData.getParameter("pGender");
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        rp.createProfile(name, kodeord, gender,email,description,admin);
-        return "redirect:/";
+        rp.createProfile(name, kodeord, gender, email, description, admin);
+        return "login";
     }
 
     @PostMapping("/correctlogin")
-    public String login(WebRequest loginData) {
-    String name = loginData.getParameter("pName");
-    String kodeord = loginData.getParameter("pKodeord");
+    public String login(WebRequest loginData) throws SQLException {
+        String email = loginData.getParameter("pEmail");
+        String kodeord = loginData.getParameter("pKodeord");
+        allProfiles = rp.searchLogin(email,kodeord);
 
-    try (){
-        allProfiles = rp.searchLogin(name, kodeord);
-        Profile p = allProfiles.get(0);
-        System.out.println("id: " + p.getId() + ", admin: " + p.getAdmin());
-        //rp.searchLogin(name, kodeord).getId();
-    }
-    catch (SQLException e) {
-        System.out.println("oOOps");
-        e.printStackTrace();
-    }
-
-        // rp.searchLogin(name, kodeord).getAdmin();
-
+        try {
+            Profile p = allProfiles.get(0);
+        } catch (IndexOutOfBoundsException e) {
+            return "errorlogin";
+        }
         return "main";
     }
+    /*
+    @PostMapping("/incorretlogin")
+    public String incorretLogin(WebRequest loginData, Model errorModel) throws SQLException {
+        String name = loginData.getParameter("pName");
+        String kodeord = loginData.getParameter("pKodeord");
+        allProfiles = rp.searchLogin(name, kodeord);
+        errorModel.addAttribute("errorModel",errorModel);
+
+        try {
+            Profile p = allProfiles.get(0);
+
+        } catch (IndexOutOfBoundsException e) {
+            return "redirect:/incorrectlogin";
+        }
+        return "main";
+    }
+     */
 
     @PostMapping("/deleteprofile")
     public String deleteProfile(WebRequest deleteProfile) {
@@ -80,14 +88,14 @@ public class DatingController {
     @PostMapping("/editprofile")
     public String editProfile(WebRequest editProfile) {
         try {
-            String gender = null;
+            String gender = "";
             int id = Integer.parseInt(editProfile.getParameter("eId"));
             String name = editProfile.getParameter("eName");
-            //String gender = editProfile.getParameter("eGender");
-            if (editProfile.getParameter("pGender") == editProfile.getParameter("pGenderMand")) {
+            if (editProfile.getParameter("pGender") != editProfile.getParameter("pGenderMand")) {
                 gender = "Mand";
             } else {
                 gender = "Kvinde";
+                System.out.println("fejl");
             }
             String email = editProfile.getParameter("eEmail");
             String description = editProfile.getParameter("eDescription");
