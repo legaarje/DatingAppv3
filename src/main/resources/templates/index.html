@@ -18,7 +18,6 @@
     <div class="container" id="profileList">
 
         <!-- Indsæt indhold her -->
-        <h2>Opret din gratis profil her</h2>
 
 
         <div class="row">
@@ -29,15 +28,28 @@
             <h th:text="${allProfiles}" />
         </div>
 
+        <h2>Opret din gratis profil her</h2>
 
-    <div id="form-group">
+
+                <div id="form-group">
         <form id="createProfileForm" action="/createprofile" method="post" enctype="multipart/form-data">
             <label for="createProfileForm">Indtast brugernavn</label>
             <div class="form-row">
                 <div class="col">
             <input type="text" id="pName" name="pName" placeholder="Brugernavn..."><br>
-                </div>
             </div>
+            </div>
+            <br>
+
+            <label for="createProfileForm">Indtast Kodeord</label>
+            <div class="form-row">
+                <div class="col">
+            <input type="text" id="pKodeord" name="pKodeord" placeholder="Kodeord..."><br>
+            </div>
+            </div>
+
+
+
             <br>
             <input type="radio" name="pGender" value="pGenderMand"> Mand
             <input type="radio" name="pGender" value="pGenderKvinde"> Kvinde<br>
@@ -58,24 +70,33 @@
             <textarea rows="5" type="text" id="pDescription" name="pDescription" placeholder="Skriv din profil her..."></textarea>
                 <br><br>
 
-
-
-
             <input type="submit" id="submit-form" value="Lav profil!">
         </form>
+                 <br><br>
 
-        <form id="toSearchProfile" action="/searchprofiles" method="get">
+
+
+                    <!-- Søg efter profiler knap-->
+
+                    <form id="toSearchProfile" action="/searchprofiles" method="get">
             <input type="submit" id="search-form" value="Søg efter profiler">
         </form>
+        <br>
 
-        <form id="delete-form" action="/deleteprofile" method="post">
+                    <!-- slet bruger felt og knap-->
+
+                    <form id="delete-form" action="/deleteprofile" method="post">
             <input type="text" id="delete" name="delete" placeholder="slet bruger..."><br><br>
             <input type="submit" value="deleteprofile">
         </form>
     </div>
 
-    <div id="edit-container">
+
+                <!-- Søg efter profiler felt og knap-->
+
+                <div id="edit-container">
         <form id="editProfile" action="/editprofile" method="post" enctype="multipart/form-data">
+
             <label for="editProfile"></label>
             <input type="int" id="eId" name="eId" placeholder="Vælg bruger..."><br><br>
             <input type="text" id="eName" name="eName" placeholder="Ændre navn..."><br>
@@ -84,6 +105,7 @@
         <!--<input type="text" id="eGender" name="eGender" placeholder="Ændre Køn..."><br><br> -->
             <input type="text" id="eEmail" name="eEmail" placeholder="Ændre Email..."><br><br>
             <input type="text" id="eDescription" name="eDescription" placeholder="Ændre Om dig selv..."><br><br>
+            <input type="text" id="eKodeord" name="eKodeord">
             <input type="submit" id="edit-form" value="Ændre profil!">
         </form>
     </div>

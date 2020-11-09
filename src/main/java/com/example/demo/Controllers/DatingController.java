@@ -1,14 +1,13 @@
 package com.example.demo.Controllers;
 
-import com.example.demo.Models.contactForm;
 import com.example.demo.Models.Profile;
 import com.example.demo.Repositories.ProfileRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,8 @@ public class DatingController {
 
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
-    Profile profile = new Profile(0,null,null,null,null,null);
+    List<Profile> searchLogin = new ArrayList<>();
+    Profile profile = new Profile(0,null,null,null,null,null, null, null);
 
 
     @GetMapping("/")
@@ -39,8 +39,21 @@ public class DatingController {
        // String gender = createProfileData.getParameter("pGender");
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
-        rp.createProfile(name,gender,email,description);
+        String kodeord = createProfileData.getParameter("pKodeord");
+        rp.createProfile(name, kodeord, gender,email,description);
         return "redirect:/";
+    }
+
+    @PostMapping("/login")
+    public String login(WebRequest loginData) throws SQLException {
+    String name = loginData.getParameter("pName");
+    String kodeord = loginData.getParameter("pKodeord");
+
+        System.out.println(rp.searchLogin(name, kodeord).getId());
+
+        System.out.println(rp.searchLogin(name, kodeord).getAdmin());
+
+        return "index";
     }
 
     @PostMapping("/deleteprofile")
@@ -87,19 +100,27 @@ public class DatingController {
         return "profileList";
     }
 
-    @GetMapping("/contactForm")
-    public String contactForm(Model model) {
-        model.addAttribute("contactForm", new contactForm());
+    //Login
+    @GetMapping("/login")
+    public String login(Model model) {
+        //model.addAttribute("pLogin", new login());
+        //model.addAttribute("pName", "pKodeord");
         return "Login";
     }
 
-    @PostMapping("/contactForm")
-    public String contactSubmit(@ModelAttribute contactForm contactForm, Model model) {
+    /*
+   @PostMapping("/login")
+    public String login(WebRequest login) throws SQLException {
+        String
         model.addAttribute("contactForm", contactForm);
         // Tilføj ArrayList og / eller FileWriter her?
         return "contactReceipt";
+    } */
+
+   //         String name = createProfileData.getParameter("pName");
+
     }
-}
+
 
 
 

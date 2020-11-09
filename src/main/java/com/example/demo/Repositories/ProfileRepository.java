@@ -15,6 +15,7 @@ public class ProfileRepository {
 
     //liste med alle profiler
     List<Profile> allProfiles = new ArrayList<Profile>();
+    List<Profile> searchLogin = new ArrayList<Profile>();
 
     //Denne metode laver forbindelsen til mysql databasen
     private Connection establishConnection() throws SQLException {
@@ -37,7 +38,9 @@ public class ProfileRepository {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getBlob(6));
+                        rs.getString(6),
+                        rs.getBoolean(7),
+                        rs.getBlob(8));
                 allProfiles.add(tmp);
             }
 
@@ -48,15 +51,16 @@ public class ProfileRepository {
     }
 
 
-    public void createProfile(String pName, String pGender, String pEmail, String pDescription) throws SQLException {
+    public void createProfile(String pName, String pKodeord, String pGender, String pEmail, String pDescription) throws SQLException {
         allProfiles.clear();
         //lavet et statement og eksekvere en query
-        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name,gender,email,description) VALUES (?,?,?,?);");
+        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, kodeord, gender,email,description) VALUES (?,?,?,?,?);");
 
         ps.setString(1,pName);
-        ps.setString(2,pGender);
-        ps.setString(3,pEmail);
-        ps.setString(4,pDescription);
+        ps.setString(2, pKodeord);
+        ps.setString(3,pGender);
+        ps.setString(4,pEmail);
+        ps.setString(5,pDescription);
 
         int rs = ps.executeUpdate();
 
@@ -72,7 +76,9 @@ public class ProfileRepository {
                     rss.getString(3),
                     rss.getString(4),
                     rss.getString(5),
-                    rss.getBlob(6));
+                    rss.getString(6),
+                    rss.getBoolean(7),
+                    rss.getBlob(8));
             allProfiles.add(temp);
 
         }
@@ -107,9 +113,46 @@ public class ProfileRepository {
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5),
-                    rs.getBlob(6));
+                    rs.getString(6),
+                    rs.getBoolean(7),
+                    rs.getBlob(8));
             allProfiles.add(temp);
         }
         return allProfiles;
     }
+
+
+    public Profile searchLogin(String name, String kodeord) throws SQLException {
+        allProfiles.clear();
+        PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where name like ? AND where kodeord = ?");
+        ps.setString(1,"%" + name + "%");
+        ps.setString(2, kodeord);
+        ResultSet rs = ps.executeQuery();
+
+        Profile uniquelogin = null;
+        while (rs.next()) {
+           uniquelogin = new Profile(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getBoolean(7),
+                    rs.getBlob(8));
+
+        }
+        return uniquelogin;
+
+        /*
+        int i = rs.getInt(1);
+        rs.getInt(1);
+        rs.getBoolean(2);
+        return i;
+        */
+    }
+
+
+
+
 }

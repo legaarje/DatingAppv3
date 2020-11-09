@@ -1,30 +1,32 @@
 package com.example.demo.Models;
 
-import java.io.InputStream;
 import java.sql.Blob;
-import java.sql.ResultSet;
 
 public class Profile {
 
     private int id;
     private String name;
+    private String kodeord;
     private String gender;
     private String email;
     private String description;
     private Blob picture;
+    private Boolean admin;
 
-    public Profile(int id, String name, String gender, String email, String description, Blob picture) {
+    public Profile(int id, String name, String kodeord, String gender, String email, String description, Boolean admin, Blob picture) {
         this.id = id;
         this.name = name;
+        this.kodeord = kodeord;
         this.gender = gender;
         this.email = email;
         this.description = description;
+        this.admin = admin;
         this.picture = picture;
     }
 
     @Override
     public String toString() {
-        return "id=" + id + ", " + name + ", " + gender + ", "+ email + ", " + description;
+        return "id=" + id + ",  " + name + ", " + kodeord + ", " + gender + ", "+ email + ", " + description + ", " + admin;
     }
 
     public int getId() {
@@ -74,4 +76,22 @@ public class Profile {
     public void setPicture(Blob picture) {
         this.picture = picture;
     }
+
+    public String getKodeord() {
+        return kodeord;
+    }
+
+    public void setKodeord() {
+        this.kodeord = kodeord;
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin() {
+        this.admin = admin;
+    }
+
+
 }
