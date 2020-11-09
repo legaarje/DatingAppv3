@@ -120,16 +120,15 @@ public class ProfileRepository {
     }
 
 
-    public Profile searchLogin(String name, String kodeord) throws SQLException {
+    public List<Profile> searchLogin(String name, String kodeord) throws SQLException {
         allProfiles.clear();
         PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where name = ? AND kodeord = ?");
-        ps.setString(1,"%" + name + "%");
+        ps.setString(1, name);
         ps.setString(2, kodeord);
         ResultSet rs = ps.executeQuery();
 
-        Profile uniquelogin = null;
         while (rs.next()) {
-           uniquelogin = new Profile(
+          Profile uniquelogin = new Profile(
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3),
@@ -138,9 +137,10 @@ public class ProfileRepository {
                     rs.getString(6),
                     rs.getInt(7));
               //      rs.getBlob(8));
+            allProfiles.add(uniquelogin);
 
         }
-        return uniquelogin;
+        return allProfiles;
 
         /*
         int i = rs.getInt(1);

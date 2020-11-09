@@ -46,13 +46,22 @@ public class DatingController {
     }
 
     @PostMapping("/correctlogin")
-    public String login(WebRequest loginData) throws SQLException {
+    public String login(WebRequest loginData) {
     String name = loginData.getParameter("pName");
     String kodeord = loginData.getParameter("pKodeord");
 
+    try (){
+        allProfiles = rp.searchLogin(name, kodeord);
+        Profile p = allProfiles.get(0);
+        System.out.println("id: " + p.getId() + ", admin: " + p.getAdmin());
         //rp.searchLogin(name, kodeord).getId();
+    }
+    catch (SQLException e) {
+        System.out.println("oOOps");
+        e.printStackTrace();
+    }
 
-       // rp.searchLogin(name, kodeord).getAdmin();
+        // rp.searchLogin(name, kodeord).getAdmin();
 
         return "main";
     }
