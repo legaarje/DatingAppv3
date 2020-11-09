@@ -39,8 +39,8 @@ public class ProfileRepository {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
-                        rs.getBlob(8));
+                        rs.getInt(7));
+                  //      rs.getBlob(8));
                 allProfiles.add(tmp);
             }
 
@@ -76,8 +76,8 @@ public class ProfileRepository {
                     rss.getString(4),
                     rss.getString(5),
                     rss.getString(6),
-                    rss.getInt(7),
-                    rss.getBlob(8));
+                    rss.getInt(7));
+           //         rss.getBlob(8));
             allProfiles.add(temp);
 
         }
@@ -113,8 +113,7 @@ public class ProfileRepository {
                     rs.getString(4),
                     rs.getString(5),
                     rs.getString(6),
-                    rs.getInt(7),
-                    rs.getBlob(8));
+                    rs.getInt(7));
             allProfiles.add(temp);
         }
         return allProfiles;
@@ -123,7 +122,7 @@ public class ProfileRepository {
 
     public Profile searchLogin(String name, String kodeord) throws SQLException {
         allProfiles.clear();
-        PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where name like ? AND where kodeord = ?");
+        PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where name = ? AND kodeord = ?");
         ps.setString(1,"%" + name + "%");
         ps.setString(2, kodeord);
         ResultSet rs = ps.executeQuery();
@@ -137,8 +136,8 @@ public class ProfileRepository {
                     rs.getString(4),
                     rs.getString(5),
                     rs.getString(6),
-                    rs.getInt(7),
-                    rs.getBlob(8));
+                    rs.getInt(7));
+              //      rs.getBlob(8));
 
         }
         return uniquelogin;

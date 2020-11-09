@@ -1,7 +1,5 @@
 package com.example.demo.Models;
 
-import java.sql.Blob;
-
 public class Profile {
 
     private int id;
@@ -10,10 +8,10 @@ public class Profile {
     private String gender;
     private String email;
     private String description;
-    private Blob picture;
+   // private Blob picture;
     private int admin;
 
-    public Profile(int id, String name, String kodeord, String gender, String email, String description, int admin, Blob picture) {
+    public Profile(int id, String name, String kodeord, String gender, String email, String description, int admin) {
         this.id = id;
         this.name = name;
         this.kodeord = kodeord;
@@ -21,7 +19,7 @@ public class Profile {
         this.email = email;
         this.description = description;
         this.admin = admin;
-        this.picture = picture;
+    //    this.picture = picture;
     }
 
     @Override
@@ -69,14 +67,14 @@ public class Profile {
         this.description = description;
     }
 
-    public Blob getPicture() {
+  /*  public Blob getPicture() {
         return picture;
     }
 
     public void setPicture(Blob picture) {
         this.picture = picture;
     }
-
+    */
     public String getKodeord() {
         return kodeord;
     }

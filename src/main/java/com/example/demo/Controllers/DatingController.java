@@ -18,7 +18,7 @@ public class DatingController {
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> searchLogin = new ArrayList<>();
-    Profile profile = new Profile(0,null,null,null,null,null, 0, null);
+    // Profile profile = new Profile(0,null,null,null,null,null, 0, null);
 
 
     @GetMapping("/")
@@ -33,9 +33,9 @@ public class DatingController {
         int admin = 0;
         String name = createProfileData.getParameter("pName");
         if (createProfileData.getParameter("pGender") == createProfileData.getParameter("pGenderMand")) {
-            gender = "Kvinde";
-        } else {
             gender = "Mand";
+        } else {
+            gender = "Kvinde";
         }
        // String gender = createProfileData.getParameter("pGender");
         String email = createProfileData.getParameter("pEmail");
@@ -45,16 +45,16 @@ public class DatingController {
         return "redirect:/";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/correctlogin")
     public String login(WebRequest loginData) throws SQLException {
     String name = loginData.getParameter("pName");
     String kodeord = loginData.getParameter("pKodeord");
 
-        System.out.println(rp.searchLogin(name, kodeord).getId());
+        //rp.searchLogin(name, kodeord).getId();
 
-        System.out.println(rp.searchLogin(name, kodeord).getAdmin());
+       // rp.searchLogin(name, kodeord).getAdmin();
 
-        return "index";
+        return "main";
     }
 
     @PostMapping("/deleteprofile")
@@ -76,9 +76,9 @@ public class DatingController {
             String name = editProfile.getParameter("eName");
             //String gender = editProfile.getParameter("eGender");
             if (editProfile.getParameter("pGender") == editProfile.getParameter("pGenderMand")) {
-                gender = "Kvinde";
-            } else {
                 gender = "Mand";
+            } else {
+                gender = "Kvinde";
             }
             String email = editProfile.getParameter("eEmail");
             String description = editProfile.getParameter("eDescription");
@@ -98,7 +98,7 @@ public class DatingController {
             throwables.printStackTrace();
         }
         searchModel.addAttribute("profile",allProfiles);
-        return "profileList";
+        return "main";
     }
 
     //Login
@@ -106,7 +106,7 @@ public class DatingController {
     public String login(Model model) {
         //model.addAttribute("pLogin", new login());
         //model.addAttribute("pName", "pKodeord");
-        return "Login";
+        return "login";
     }
 
     /*
