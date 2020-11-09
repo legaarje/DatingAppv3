@@ -1,0 +1,43 @@
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<title>Login</title>
+
+<div th:insert="fragments/header :: header"></div>
+
+<div th:insert="fragments/menu :: menu"></div>
+
+<body>
+
+<div th:insert="fragments/jumbotron :: jumbotron"></div>
+
+    <div class="container">
+
+        <!-- Indsæt indhold her -->
+        <h2>Indtast dit brugernavn og kodeord</h2>
+
+        <div class="row">
+            <div class="col-md-8">
+                <form action="/Login"  method="post" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <!--- <label for="email">Brugernavn</label> --->
+                        <input type="text" id="pName" name="pName" placeholder="brugernavn..."><br><br>
+                    </div>
+                    <div class="form-group">
+                        <!--- <label for="message">Kodeord</label> --->
+                        <input type="text" id="pKodeord" name="pKodeord" placeholder="Kodeord..."><br><br>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Log ind</button>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+
+    </div> <!-- /container -->
+</body>
+
+
+</html>
