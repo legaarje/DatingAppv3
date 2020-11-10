@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div id="form-container">
+        <form id="searchProfiles" action="/searchprofiles" method="get">
+            <label for="searchProfiles"></label>
+            <input type="text" id="sGender" name="sGender" placeholder="Køn..."><br><br>
+            <input type="submit" id="submit-form" value="Søg nu!!">
+        </form>
+    </div>
+
+    <div class="col" id="profile">
+        <h2>Profiles</h2>
+        <div th:each="allProfiles : ${profile}">
+            <a href="profile"> <h th:text="${allProfiles}" /> </a>
+        </div>
+    </div>
+
+    <form id="toMainPage" action="/" method="get">
+        <input type="submit" id="mainpage-form" value="tilbage">
+    </form>
+
+    <div id="profileSite-container">
+        <form id="profileSite" action="/getProfile" method="post">
+            <label for="profileId"></label>
+            <input type="text" id="profileId" name="profileId" placeholder="id på bruger..."><br><br>
+            <input type="submit" id="profileSubmit-form" value="søg efter bruger!!">
+        </form>
+    </div>
+
+</body>
+</html>
