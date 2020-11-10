@@ -26,7 +26,7 @@
             <div th:each="allProfiles : ${profileList}">
                 <div>
                     <!--- kodeord og gender er modsat hinanden, nød til at skrive kodeord, for at få gender -->
-                    <p th:text="${allProfiles.getName()}"></p>
+                    <a onclick="profile"> <p th:text="${allProfiles.getName()}"></p></a>
                     <p th:text="${allProfiles.getKodeord()}"></p>
                     <p th:text="${allProfiles.getDescription()}"></p><br><br>
                 </div>

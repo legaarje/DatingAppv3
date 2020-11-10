@@ -24,11 +24,9 @@
 
             <form action="/correctlogin"  method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <!--- <label for="email">Brugernavn</label> --->
-                    <input type="text" id="pName" name="pName" placeholder="Brugernavn..."><br>
+                    <input type="text" id="pEmail" name="pEmail" placeholder="Email..."><br>
                 </div>
                 <div class="form-group">
-                    <!--- <label for="message">Kodeord</label> --->
                     <input type="text" id="pKodeord" name="pKodeord" placeholder="Kodeord..."><br>
                 </div>
                 <button class="btn btn-primary" type="submit">Log ind</button>
@@ -36,23 +34,9 @@
         </div>
     </div>
     <br><br>
-    <div class="errorModel" id="errorModel" style="display:none">
-        <h2>Error</h2>
-    </div>
-
     <div>
         <h4>Forkert Email og/eller kodeord</h4>
     </div>
-
-    <!--
-    <script>
-        function openForm() {
-            var T = document.getElementById("errorModel")
-            T.style.display = "block";
-            var check = 1;
-        }
-    </script>
-    -->
 
     <hr>
     <form id="toMainPage" action="/" method="get">

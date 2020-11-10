@@ -8,7 +8,6 @@ public class Profile {
     private String gender;
     private String email;
     private String description;
-    //private String picture;
     private int admin;
 
     public Profile(int id, String name, String kodeord, String gender, String email, String description, int admin) {

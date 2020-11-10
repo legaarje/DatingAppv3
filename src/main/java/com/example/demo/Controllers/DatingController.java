@@ -34,7 +34,7 @@ public class DatingController {
         String gender = null;
         int admin = 0;
         String name = createProfileData.getParameter("pName");
-        if (createProfileData.getParameter("pGender") == createProfileData.getParameter("pGenderMand")) {
+        if (createProfileData.getParameter("pGender").equals(createProfileData.getParameterValues("pGenderMand"))) {
             gender = "Mand";
         } else {
             gender = "Kvinde";
