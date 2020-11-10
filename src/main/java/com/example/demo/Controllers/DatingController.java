@@ -126,6 +126,20 @@ public class DatingController {
         return "login";
     }
 
+    @GetMapping("/profile")
+    public String profile(Model profileModel, WebRequest profile){
+
+        String profileId = profile.getParameter("profileId");
+
+        try {
+            allProfiles = rp.profile(profileId);
+            profileModel.addAttribute("profile",allProfiles);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return "profile";
+    }
+
     /*
    @PostMapping("/login")
     public String login(WebRequest login) throws SQLException {

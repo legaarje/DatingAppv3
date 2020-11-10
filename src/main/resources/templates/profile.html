@@ -2,13 +2,28 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <div th:insert="fragments/header :: header"></div>
+    <div th:insert="fragments/menu :: menu"></div>
     <title>Title</title>
 </head>
 <body>
 
-<div class="col" id="opskrift-container">
-    <a>HEj</a>
-</div>
+    <div th:insert="fragments/jumbotron :: jumbotron"></div>
+
+    <div id="form-container">
+        <form id="profile" action="/profile" method="get">
+            <label for="profileId"></label>
+            <input type="text" id="profileId" name="profileId" placeholder="id på bruger..."><br><br>
+            <input type="submit" id="submit-form" value="søg efter bruger!!">
+        </form>
+    </div>
+
+    <div class="col" id="main">
+        <h2>Profiles</h2>
+        <div th:each="allProfiles : ${profile}">
+            <h th:text="${allProfiles}" />
+        </div>
+    </div>
 
 </body>
 </html>
