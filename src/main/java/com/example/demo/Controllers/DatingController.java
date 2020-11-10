@@ -44,43 +44,24 @@ public class DatingController {
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
         rp.createProfile(name, kodeord, gender,email,description,admin);
-        return "redirect:/";
+        return "redirect:/login";
     }
 
-    // Correct login
     @PostMapping("/correctlogin")
-    public String login(WebRequest loginData) throws SQLException {
-    String name = loginData.getParameter("pName");
-    String kodeord = loginData.getParameter("pKodeord");
+    public String login(WebRequest loginData)  throws SQLException{
 
-        //rp.searchLogin(name, kodeord).getId();
-
-       // rp.searchLogin(name, kodeord).getAdmin();
-
-        return "main";
-    }
-
-    // Main
-    @PostMapping("/main")
-    public String searchGender(Model searchModel, WebRequest searchProfile){
-            String gender = null;
-
-        if (searchProfile.getParameter("pGender") == searchProfile.getParameter("pGenderMand")) {
-            gender = "Mand";
-        } else {
-            gender = "Kvinde";
-        }
+        String email = loginData.getParameter("pEmail");
+        String kodeord = loginData.getParameter("pKodeord");
+        allProfiles = rp.searchLogin(email,kodeord);
 
         try {
-            allProfiles = rp.searchProfile(gender);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Profile p = allProfiles.get(0);
+            System.out.println("id: " + p.getId() + ", admin: " + p.getAdmin());
+        } catch (IndexOutOfBoundsException e) {
+            return "errorlogin";
         }
-        searchModel.addAttribute("profile", allProfiles);
-    return "main";
+        return "main";
     }
-
-
 
     // Delete Profile
     @PostMapping("/deleteprofile")
@@ -117,15 +98,21 @@ public class DatingController {
     }
 
     // Search Profiles
-    @GetMapping("searchprofiles")
+    @GetMapping("/main")
     public String searchProfiles(Model searchModel, WebRequest searchProfile){
-        String gender = searchProfile.getParameter("sGender");
+        String gender = null;
+
+        if (searchProfile.getParameter("pGender").equals(searchProfile.getParameterValues("pGenderMand")))  {
+            gender = "Mand";
+        } else {
+            gender = "Kvinde";
+        }
         try {
             allProfiles = rp.searchProfile(gender);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        searchModel.addAttribute("profile",allProfiles);
+        searchModel.addAttribute("profileList",allProfiles);
         return "main";
     }
 

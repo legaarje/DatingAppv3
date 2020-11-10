@@ -21,21 +21,22 @@
     <!-- Indsæt indhold her -->
     <div class="row">
 
-    <div class="col" id="profile">
-        <h2>Profiles</h2>
-        <div th:each="allProfiles : ${profile}">
-            <a href="profile"> <h th:text="${allProfiles}" /> </a>
+        <div class="col" id="profileList">
+            <h2>Profiles</h2>
+            <div th:each="allProfiles : ${profileList}">
+                <div>
+                    <!--- kodeord og gender er modsat hinanden, nød til at skrive kodeord, for at få gender -->
+                    <p th:text="${allProfiles.getName()}"></p>
+                    <p th:text="${allProfiles.getKodeord()}"></p>
+                    <p th:text="${allProfiles.getDescription()}"></p><br><br>
+                </div>
+            </div>
         </div>
-    </div>
-
 
         <div class="col-md-6">
-
-
             <div id="form-container">
                 <h2>Søg profiler efter køn</h2>
-                <form action="/searchGender" method="post" enctype="multipart/form-data">
-                    <!-- <label for="searchgender"></label> -->
+                <form action="/main" method="get" enctype="multipart/form-data">
                     <div class="form-group">
                         <input type="radio" name="pGender" value="pGenderMand"> Mand
                         <input type="radio" name="pGender" value="pGenderKvinde"> Kvinde<br>
@@ -45,14 +46,6 @@
 
             </div>
 
-            <br><br>
-            <h2>Profiler</h2>
-
-            <tr th:each="profile : ${profile}">
-                <td th:text="${profile.name}" /><br>
-                <td th:text="${profile.gender}" /><br>
-                <td th:text="${profile.description}" /><br><br>
-            </tr>
 
             <br><br>
 

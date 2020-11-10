@@ -8,7 +8,7 @@ public class Profile {
     private String gender;
     private String email;
     private String description;
-    //private Blob picture;
+    //private String picture;
     private int admin;
 
     public Profile(int id, String name, String kodeord, String gender, String email, String description, int admin) {
@@ -19,12 +19,12 @@ public class Profile {
         this.email = email;
         this.description = description;
         this.admin = admin;
-    //    this.picture = picture;
+        //this.picture = picture;
     }
 
     @Override
     public String toString() {
-        return "id=" + id + ",  " + name + ", " + kodeord + ", " + gender + ", "+ email + ", " + description + ", " + admin;
+        return "id=" + id + ",  " + name + ", " + kodeord + ", " + gender + ", " + email + ", " + description + ", " + admin;
     }
 
     public int getId() {
@@ -41,6 +41,14 @@ public class Profile {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getKodeord() {
+        return kodeord;
+    }
+
+    public void setKodeord(String kodeord) {
+        this.kodeord = kodeord;
     }
 
     public String getGender() {
@@ -66,30 +74,22 @@ public class Profile {
     public void setDescription(String description) {
         this.description = description;
     }
-
-  /*  public Blob getPicture() {
+/*
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(Blob picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
-    */
-    public String getKodeord() {
-        return kodeord;
-    }
-
-    public void setKodeord() {
-        this.kodeord = kodeord;
-    }
-
+ */
     public int getAdmin() {
         return admin;
     }
 
-    public void setAdmin() {
+    public void setAdmin(int admin) {
         this.admin = admin;
     }
-
-
 }
+
+

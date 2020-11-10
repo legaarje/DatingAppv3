@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
 
 h1, h2, h3, h4, h5, h6{
@@ -14,48 +13,49 @@ body{
 }
 
 .jumbotron {
-background-image: url(images/datingbanner.jpg);
-background-size: cover;
-padding-top: 5%;
-height: 100%;
-padding-bottom: 17%;
-background-color: #ffccff;
+    background-image: url(images/datingbanner.jpg);
+    background-size: cover;
+    padding-top: 5%;
+    height: 100%;
+    padding-bottom: 17%;
+    background-color: #ffccff;
 }
 
 .btn{
-background-color: #ffccff;
-border-color: #ffccff;
+    color: #333333;
+    background-color: #eeeeee;
+    border-color: #333333;
 }
 
 .btn:hover{
-background-color: #ff0099;
-border-color: #ff0099;
+    background-color: #ff0099;
+    border-color: #ff0099;
 }
 
 .bd-placeholder-img {
-font-size: 1.125rem;
-text-anchor: middle;
--webkit-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-background-color: #ff0099; !important;
-color: #FFFFFF; !important;
-font-family: 'Courier Prime', serif; !important;
+    background-color: #ff0099; !important;
+    color: #FFFFFF; !important;
+    font-family: 'Courier Prime', serif; !important;
 }
 
 .navbar {
-background-color: #ffccff;
-color: #FFFFFF; !important;
-font-family: 'Courier Prime', serif; !important;
+    background-color: #ffccff;
+    color: #FFFFFF; !important;
+    font-family: 'Courier Prime', serif; !important;
 }
 
 .navbar .navbar-nav .dropdown-menu {
-background-color: #ffccff;
-border-color: #ff0099;
+    background-color: #ffccff;
+    border-color: #ff0099;
 }
 
 .navbar .navbar-nav .dropdown-menu .dropdown-item {
@@ -71,19 +71,62 @@ border-color: #ff0099;
     border-top-color: #ff0099;
 }
 
-@media (min-width: 768px) {
-.bd-placeholder-img-lg {
-    font-size: 3.5rem;
+.grid {
+    border: 2px solid #ff0099;
+    empty-cells: show;
+    background-color: #ffccff;
+    color: #555555;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 3fr);
+    width: 5fr;
+    margin: 2%;
 }
+
+.simple-text h1,
+.simple-text h2,
+.simple-text h3 {
+    color: #ff0099;
+}
+
+.parag1 {
+    margin: 0%;
+    padding: 10%;
+    background-color: #eeeeee;
+    color: #333333;
+    text-align: left;
+}
+
+.parag2 {
+    margin: 0%;
+    padding: 10%;
+    background-color: #ff0099;
+    color: #333333;
+    text-align: center;
+}
+
+a{
+    color: #ff0099;
+}
+a:hover {
+    color: #ffffff;
+    background-color: #ff0099;
+    text-decoration: none;
+}
+
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
 }
 
 .display-3{
-font-size: 5em;
+    font-size: 5em;
 }
 
 .video-container{
-width: 100%;
-height: auto;
+    width: 100%;
+    height: auto;
 }
 
 /*  ----------- ICONS --------------  */
