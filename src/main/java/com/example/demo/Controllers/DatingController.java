@@ -59,6 +59,7 @@ public class DatingController {
 
         return "main";
     }
+
     // Main
     @PostMapping("/main")
     public String searchGender(Model searchModel, WebRequest searchProfile){
@@ -78,6 +79,8 @@ public class DatingController {
         searchModel.addAttribute("profile", allProfiles);
     return "main";
     }
+
+
 
     // Delete Profile
     @PostMapping("/deleteprofile")
@@ -128,11 +131,10 @@ public class DatingController {
 
     //Login
     @GetMapping("/login")
-    public String login(Model model) {
-        //model.addAttribute("pLogin", new login());
-        //model.addAttribute("pName", "pKodeord");
+    public String login() {
         return "login";
     }
+
 
     //Admin
     @GetMapping("/admin")
@@ -160,11 +162,24 @@ public class DatingController {
         return "sugardaddy";
     }
 
-    // Profile
+
     @GetMapping("/profile")
-    public String profile(Model profileModel){
-        profileModel.addAttribute("profile", rp.listAllProfiles());
+    public String profile(Model profileModel) {
+        profileModel.addAttribute("profileList",allProfiles);
         return "profile";
+    }
+
+    @PostMapping("/getProfile")
+    public String uniqueProfile(WebRequest profile){
+        int profileId = Integer.parseInt(profile.getParameter("profileId"));
+
+        try {
+            allProfiles = rp.profile(profileId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return "redirect:/profile";
+
     }
 
     /*

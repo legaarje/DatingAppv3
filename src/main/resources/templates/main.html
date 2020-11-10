@@ -15,12 +15,22 @@
 <div th:insert="fragments/jumbotron :: jumbotron">
 </div>
 
+
 <div class="container" id="main">
 
     <!-- Indsæt indhold her -->
     <div class="row">
 
+    <div class="col" id="profile">
+        <h2>Profiles</h2>
+        <div th:each="allProfiles : ${profile}">
+            <a href="profile"> <h th:text="${allProfiles}" /> </a>
+        </div>
+    </div>
+
+
         <div class="col-md-6">
+
 
             <div id="form-container">
                 <h2>Søg profiler efter køn</h2>
@@ -54,6 +64,14 @@
 </div> <!-- /container -->
 <br>
 <hr>
+
+    <div id="profileSite-container">
+        <form id="profileSite" action="/getProfile" method="post">
+            <input type="submit" id="profileSubmit-form" value="Bruger profil!!">
+        </form>
+    </div>
+
+
 </body>
 <div th:insert="fragments/footer :: footer"></div>
 

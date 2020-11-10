@@ -57,7 +57,7 @@ public class ProfileRepository {
         PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, kodeord, gender,email,description) VALUES (?,?,?,?,?);");
 
         ps.setString(1,pName);
-        ps.setString(2, pKodeord);
+        ps.setString(2,pKodeord);
         ps.setString(3,pGender);
         ps.setString(4,pEmail);
         ps.setString(5,pDescription);
@@ -138,19 +138,28 @@ public class ProfileRepository {
                     rs.getInt(7));
               //      rs.getBlob(8));
             allProfiles.add(uniquelogin);
+        }
+        return allProfiles;
+    }
+
+    public List<Profile> profile(int id) throws SQLException {
+        allProfiles.clear();
+        PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where id = ?");
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Profile profile = new Profile(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getInt(7));
+            allProfiles.add(profile);
 
         }
         return allProfiles;
-
-        /*
-        int i = rs.getInt(1);
-        rs.getInt(1);
-        rs.getBoolean(2);
-        return i;
-        */
     }
-
-
-
-
 }
