@@ -24,7 +24,6 @@
     <div th:insert="fragments/jumbotron :: jumbotron"></div>
 
         <div class="col" id="profileList">
-            <h2>Profiles</h2>
             <div th:each="allProfiles : ${profileList}">
                 <div>
                     <h4 th:text="${allProfiles.getId()}"></h4>
@@ -53,7 +52,7 @@
                         </form>
                     </div>
                 </div>
-                
+
 
                 </div>
             </div>

@@ -57,6 +57,7 @@ public class DatingController {
 
         try {
             currentLogin = allProfiles.get(0);
+            System.out.println("logged in as " + allProfiles.get(0).toString());
         } catch (IndexOutOfBoundsException e) {
             return "errorlogin";
         }
@@ -150,8 +151,6 @@ public class DatingController {
     @GetMapping("/profile")
     public String profile(Model profileModel) {
         profileModel.addAttribute("profileList",allProfiles);
-        System.out.println("inde");
-
         return "profile";
     }
 
