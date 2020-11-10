@@ -102,7 +102,7 @@ public class ProfileRepository {
     public List<Profile> searchProfile(String gender) throws SQLException {
         allProfiles.clear();
         PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where gender like ?");
-        ps.setString(1,"%" + gender + "%");
+        ps.setString(1,gender);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {

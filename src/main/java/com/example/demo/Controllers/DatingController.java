@@ -18,6 +18,7 @@ public class DatingController {
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> searchLogin = new ArrayList<>();
+    Profile currentLogin = new Profile(0,null,null,null,null,null,0);
     // Profile profile = new Profile(0,null,null,null,null,null, 0, null);
 
 
@@ -55,7 +56,7 @@ public class DatingController {
         allProfiles = rp.searchLogin(email,kodeord);
 
         try {
-            Profile p = allProfiles.get(0);
+            currentLogin = allProfiles.get(0);
         } catch (IndexOutOfBoundsException e) {
             return "errorlogin";
         }
@@ -99,9 +100,9 @@ public class DatingController {
     // Search Profiles
     @GetMapping("/main")
     public String searchProfiles(Model searchModel, WebRequest searchProfile){
-        String gender = null;
+        String gender = "";
 
-        if (searchProfile.getParameter("pGender").equals(searchProfile.getParameterValues("pGenderMand")))  {
+        if (searchProfile.getParameter("pGender").equals("pGenderMand"))  {
             gender = "Mand";
         } else {
             gender = "Kvinde";
@@ -125,8 +126,6 @@ public class DatingController {
     //Admin
     @GetMapping("/admin")
     public String admin(Model model) {
-        //model.addAttribute("pLogin", new login());
-        //model.addAttribute("pName", "pKodeord");
         return "admin";
     }
 
@@ -148,11 +147,11 @@ public class DatingController {
         return "sugardaddy";
     }
 
-
     @GetMapping("/profile")
     public String profile(Model profileModel) {
         profileModel.addAttribute("profileList",allProfiles);
         System.out.println("inde");
+
         return "profile";
     }
 
@@ -168,21 +167,14 @@ public class DatingController {
             throwables.printStackTrace();
             System.out.println("hov");
         }
+
+        if ( currentLogin.getId()==Integer.parseInt(id)) {
+
+        }
+
         return "redirect:/profile";
     }
-
-    /*
-   @PostMapping("/login")
-    public String login(WebRequest login) throws SQLException {
-        String
-        model.addAttribute("contactForm", contactForm);
-        // Tilføj ArrayList og / eller FileWriter her?
-        return "contactReceipt";
-    } */
-
-   //         String name = createProfileData.getParameter("pName");
-
-    }
+}
 
 
 

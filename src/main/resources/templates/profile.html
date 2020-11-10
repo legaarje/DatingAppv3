@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml">
 
 <head>
     <div th:insert="fragments/header :: header"></div>
@@ -23,16 +23,7 @@
 
     <div th:insert="fragments/jumbotron :: jumbotron"></div>
 
-    <div id="profileSite-container">
-        <form id="profileSite" action="/getProfile" method="post">
-            <label for="profileId"></label>
-            <input type="text" id="profileId" name="profileId" placeholder="id på bruger..."><br><br>
-            <input type="submit" id="profileSubmit-form" value="søg efter bruger!!">
-        </form>
-    </div>
-
         <div class="col" id="profileList">
-            <h2>Profiles</h2>
             <div th:each="allProfiles : ${profileList}">
                 <div>
                     <h4 th:text="${allProfiles.getId()}"></h4>
@@ -43,31 +34,29 @@
                     <h4 th:text="${allProfiles.getDescription()}"></h4>
                     <h4 th:text="${allProfiles.getAdmin()}"></h4>
                 </div>
-            </div>
 
-            <div id="edit-container">
-                <h2>Ret profil</h2>
-                <div id="editProfile" action="/editprofile" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="editProfile"></label>
-                        <input type="radio" name="eGender" value="eGenderMand"> Mand
-                        <input type="radio" name="eGender" value="eGenderKvinde"> Kvinde<br>
-                        <!--<input type="text" id="eGender" name="eGender" placeholder="Ændre Køn..."><br><br> -->
-                        <input type="int" id="eId" name="eId" placeholder="Vælg bruger ID..."><br>
-                        <input type="text" id="eName" name="eName" placeholder="Ændre navn..."><br>
-                        <input type="text" id="eEmail" name="eEmail" placeholder="Ændre mailadresse..."><br>
-                        <input type="text" id="eDescription" name="eDescription" placeholder="Ændre beskrivelse..."><br><br>
+
+                <div id="edit-container" style="display: none">
+                    <h2>Ret profil</h2>
+                    <div id="editProfile" action="/editprofile" method="post" enctype="multipart/form-data" >
+                        <div class="form-group">
+                            <label for="editProfile"></label>
+                            <input type="radio" name="eGender" value="eGenderMand"> Mand
+                            <input type="radio" name="eGender" value="eGenderKvinde"> Kvinde<br>
+                            <input type="int" id="eId" name="eId" placeholder="Vælg bruger ID..."><br>
+                            <input type="text" id="eName" name="eName" placeholder="Ændre navn..."><br>
+                            <input type="text" id="eEmail" name="eEmail" placeholder="Ændre mailadresse..."><br>
+                            <input type="text" id="eDescription" name="eDescription" placeholder="Ændre beskrivelse..."><br><br>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Gem profil</button>
+                        </form>
                     </div>
-                    <button class="btn btn-primary" type="submit">Gem profil</button>
-                    </form>
+                </div>
+
+
                 </div>
             </div>
-
         </div>
-    </div>
-
-
-
     </div>
 
 </body>
