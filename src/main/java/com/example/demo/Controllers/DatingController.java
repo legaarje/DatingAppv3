@@ -56,7 +56,7 @@ public class DatingController {
 
         try {
             Profile p = allProfiles.get(0);
-            System.out.println("id: " + p.getId() + ", admin: " + p.getAdmin());
+            System.out.println(p.getId());
         } catch (IndexOutOfBoundsException e) {
             return "errorlogin";
         }

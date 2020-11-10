@@ -128,7 +128,7 @@ public class ProfileRepository {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-          Profile uniquelogin = new Profile(
+            Profile uniquelogin = new Profile(
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3),
@@ -136,7 +136,6 @@ public class ProfileRepository {
                     rs.getString(5),
                     rs.getString(6),
                     rs.getInt(7));
-              //      rs.getBlob(8));
             allProfiles.add(uniquelogin);
         }
         return allProfiles;
