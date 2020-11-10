@@ -10,29 +10,34 @@
 
 <body>
 
-<div th:insert="fragments/jumbotron :: jumbotron"></div>
+<div th:insert="fragments/jumbotron :: jumbotron">
+</div>
 
-    <div class="container">
+<div class="container">
 
         <!-- Indsæt indhold her -->
+        <div class="simple-text"><h1>LOGIN</h1></div>
         <h2>Indtast din Email og kodeord</h2>
 
         <div class="row">
             <div class="col-md-8">
+
                 <form action="/correctlogin"  method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <input type="text" id="pEmail" name="pEmail" placeholder="Email..."><br><br>
+                        <!--- <label for="email">Brugernavn</label> --->
+                        <input type="text" id="pName" name="pName" placeholder="Brugernavn..."><br>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="pKodeord" name="pKodeord" placeholder="Kodeord..."><br><br>
+                        <!--- <label for="message">Kodeord</label> --->
+                        <input type="text" id="pKodeord" name="pKodeord" placeholder="Kodeord..."><br>
                     </div>
                     <button class="btn btn-primary" type="submit">Log ind</button>
                 </form>
             </div>
         </div>
-
+    <br><br>
         <div class="errorModel" id="errorModel" style="display:none">
-            <h2>Hov Hova</h2>
+            <h2>Error</h2>
         </div>
 
         <!--
@@ -46,9 +51,14 @@
         -->
 
         <hr>
+    <form id="toMainPage" action="/" method="get">
+        <button class="btn btn-primary" type="submit"><-- Tilbage</button>
+    </form>
 
-    </div> <!-- /container -->
+</div> <!-- /container -->
+<br>
+<hr>
 </body>
-
+<div th:insert="fragments/footer :: footer"></div>
 
 </html>

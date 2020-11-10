@@ -23,8 +23,9 @@ background-color: #ffccff;
 }
 
 .btn{
-background-color: #ffccff;
-border-color: #ffccff;
+color: #333333;
+background-color: #eeeeee;
+border-color: #333333;
 }
 
 .btn:hover{
