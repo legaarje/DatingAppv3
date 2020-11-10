@@ -17,15 +17,18 @@ public class DatingController {
 
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
+    List<Profile> searchLogin = new ArrayList<>();
     // Profile profile = new Profile(0,null,null,null,null,null, 0, null);
 
 
+    // Root
     @GetMapping("/")
     public String index(Model profileModel){
         profileModel.addAttribute("profile", rp.listAllProfiles());
         return "index";
     }
 
+    // Create profile
     @PostMapping("/createprofile")
     public String createProfile(WebRequest createProfileData) throws SQLException {
         String gender = null;
@@ -40,10 +43,11 @@ public class DatingController {
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        rp.createProfile(name, kodeord, gender ,email, description, admin);
-        return "profilelist";
+        rp.createProfile(name, kodeord, gender,email,description,admin);
+        return "redirect:/";
     }
 
+    // Correct login
     @PostMapping("/correctlogin")
     public String login(WebRequest loginData) throws SQLException {
     String name = loginData.getParameter("pName");
@@ -55,6 +59,7 @@ public class DatingController {
 
         return "main";
     }
+    // Main
     @PostMapping("/main")
     public String searchGender(Model searchModel, WebRequest searchProfile){
             String gender = null;
@@ -74,6 +79,7 @@ public class DatingController {
     return "main";
     }
 
+    // Delete Profile
     @PostMapping("/deleteprofile")
     public String deleteProfile(WebRequest deleteProfile) {
         try {
@@ -85,6 +91,7 @@ public class DatingController {
         return "redirect:/";
     }
 
+    // Edit Profile
     @PostMapping("/editprofile")
     public String editProfile(WebRequest editProfile) {
         try {
@@ -106,6 +113,7 @@ public class DatingController {
         return "redirect:/";
     }
 
+    // Search Profiles
     @GetMapping("searchprofiles")
     public String searchProfiles(Model searchModel, WebRequest searchProfile){
         String gender = searchProfile.getParameter("sGender");
@@ -126,6 +134,33 @@ public class DatingController {
         return "login";
     }
 
+    //Admin
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        //model.addAttribute("pLogin", new login());
+        //model.addAttribute("pName", "pKodeord");
+        return "admin";
+    }
+
+    //Om os
+    @GetMapping("/omos")
+    public String omos(Model model) {
+        return "omos";
+    }
+
+    //Sugar Mommy
+    @GetMapping("/sugarmommy")
+    public String sugarmommy(Model model) {
+        return "sugarmommy";
+    }
+
+    //Sugar Daddy
+    @GetMapping("/sugardaddy")
+    public String sugardaddy(Model model) {
+        return "sugardaddy";
+    }
+
+    // Profile
     @GetMapping("/profile")
     public String profile(Model profileModel){
         profileModel.addAttribute("profile", rp.listAllProfiles());

@@ -19,7 +19,7 @@ public class ProfileRepository {
 
     //Denne metode laver forbindelsen til mysql databasen
     private Connection establishConnection() throws SQLException {
-        Connection connectionToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app", "root", "1qaz2wsx");
+        Connection connectionToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app", "root", "1");
         return connectionToDB;
     }
 
@@ -120,16 +120,15 @@ public class ProfileRepository {
     }
 
 
-    public Profile searchLogin(String name, String kodeord) throws SQLException {
+    public List<Profile> searchLogin(String email, String kodeord) throws SQLException {
         allProfiles.clear();
-        PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where name = ? AND kodeord = ?");
-        ps.setString(1,"%" + name + "%");
+        PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where email = ? AND kodeord = ?");
+        ps.setString(1, email);
         ps.setString(2, kodeord);
         ResultSet rs = ps.executeQuery();
 
-        Profile uniquelogin = null;
         while (rs.next()) {
-           uniquelogin = new Profile(
+          Profile uniquelogin = new Profile(
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3),
@@ -138,9 +137,10 @@ public class ProfileRepository {
                     rs.getString(6),
                     rs.getInt(7));
               //      rs.getBlob(8));
+            allProfiles.add(uniquelogin);
 
         }
-        return uniquelogin;
+        return allProfiles;
 
         /*
         int i = rs.getInt(1);

@@ -16,14 +16,16 @@
 <div class="container">
 
         <!-- Indsæt indhold her -->
-        <h2>Indtast dit brugernavn og kodeord</h2>
+        <div class="simple-text"><h1>LOGIN</h1></div>
+        <h2>Indtast din Email og kodeord</h2>
 
         <div class="row">
             <div class="col-md-8">
-                <form action="/main"  method="post" enctype="multipart/form-data">
+
+                <form action="/correctlogin"  method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <!--- <label for="email">Brugernavn</label> --->
-                        <input type="text" id="pName" name="pName" placeholder="brugernavn..."><br>
+                        <input type="text" id="pName" name="pName" placeholder="Brugernavn..."><br>
                     </div>
                     <div class="form-group">
                         <!--- <label for="message">Kodeord</label> --->
@@ -33,9 +35,22 @@
                 </form>
             </div>
         </div>
-
     <br><br>
+        <div class="errorModel" id="errorModel" style="display:none">
+            <h2>Error</h2>
+        </div>
 
+        <!--
+        <script>
+            function openForm() {
+                var T = document.getElementById("errorModel")
+                T.style.display = "block";
+                var check = 1;
+            }
+        </script>
+        -->
+
+        <hr>
     <form id="toMainPage" action="/" method="get">
         <button class="btn btn-primary" type="submit"><-- Tilbage</button>
     </form>
