@@ -56,23 +56,6 @@ public class DatingController {
         }
         return "main";
     }
-    /*
-    @PostMapping("/incorretlogin")
-    public String incorretLogin(WebRequest loginData, Model errorModel) throws SQLException {
-        String name = loginData.getParameter("pName");
-        String kodeord = loginData.getParameter("pKodeord");
-        allProfiles = rp.searchLogin(name, kodeord);
-        errorModel.addAttribute("errorModel",errorModel);
-
-        try {
-            Profile p = allProfiles.get(0);
-
-        } catch (IndexOutOfBoundsException e) {
-            return "redirect:/incorrectlogin";
-        }
-        return "main";
-    }
-     */
 
     @PostMapping("/deleteprofile")
     public String deleteProfile(WebRequest deleteProfile) {
@@ -120,24 +103,26 @@ public class DatingController {
 
     //Login
     @GetMapping("/login")
-    public String login(Model model) {
-        //model.addAttribute("pLogin", new login());
-        //model.addAttribute("pName", "pKodeord");
+    public String login() {
         return "login";
     }
 
     @GetMapping("/profile")
-    public String profile(Model profileModel, WebRequest profile){
+    public String profile(Model profileModel) {
+        profileModel.addAttribute("profileList",allProfiles);
+        return "profile";
+    }
 
-        String profileId = profile.getParameter("profileId");
+    @PostMapping("/getProfile")
+    public String uniqueProfile(WebRequest profile){
+        int profileId = Integer.parseInt(profile.getParameter("profileId"));
 
         try {
             allProfiles = rp.profile(profileId);
-            profileModel.addAttribute("profile",allProfiles);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return "profile";
+        return "redirect:/profile";
     }
 
     /*

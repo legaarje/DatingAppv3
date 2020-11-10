@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -24,6 +24,12 @@
     <form id="toMainPage" action="/" method="get">
         <input type="submit" id="mainpage-form" value="tilbage">
     </form>
+
+    <div id="profileSite-container">
+        <form id="profileSite" action="/getProfile" method="post">
+            <input type="submit" id="profileSubmit-form" value="Bruger profil!!">
+        </form>
+    </div>
 
 </body>
 </html>
