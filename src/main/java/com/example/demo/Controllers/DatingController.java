@@ -18,45 +18,71 @@ public class DatingController {
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> searchLogin = new ArrayList<>();
+    // Profile profile = new Profile(0,null,null,null,null,null, 0, null);
 
 
+    // Root
     @GetMapping("/")
     public String index(Model profileModel){
         profileModel.addAttribute("profile", rp.listAllProfiles());
         return "index";
     }
 
+    // Create profile
     @PostMapping("/createprofile")
     public String createProfile(WebRequest createProfileData) throws SQLException {
-        String gender = "";
+        String gender = null;
         int admin = 0;
         String name = createProfileData.getParameter("pName");
-        if (createProfileData.getParameter("pGender") != createProfileData.getParameter("pGenderMand")) {
+        if (createProfileData.getParameter("pGender") == createProfileData.getParameter("pGenderMand")) {
             gender = "Mand";
         } else {
             gender = "Kvinde";
         }
+       // String gender = createProfileData.getParameter("pGender");
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        rp.createProfile(name, kodeord, gender, email, description, admin);
-        return "login";
+        rp.createProfile(name, kodeord, gender,email,description,admin);
+        return "redirect:/";
     }
 
+    // Correct login
     @PostMapping("/correctlogin")
     public String login(WebRequest loginData) throws SQLException {
-        String email = loginData.getParameter("pEmail");
-        String kodeord = loginData.getParameter("pKodeord");
-        allProfiles = rp.searchLogin(email,kodeord);
+    String name = loginData.getParameter("pName");
+    String kodeord = loginData.getParameter("pKodeord");
 
-        try {
-            Profile p = allProfiles.get(0);
-        } catch (IndexOutOfBoundsException e) {
-            return "errorlogin";
-        }
+        //rp.searchLogin(name, kodeord).getId();
+
+       // rp.searchLogin(name, kodeord).getAdmin();
+
         return "main";
     }
 
+    // Main
+    @PostMapping("/main")
+    public String searchGender(Model searchModel, WebRequest searchProfile){
+            String gender = null;
+
+        if (searchProfile.getParameter("pGender") == searchProfile.getParameter("pGenderMand")) {
+            gender = "Mand";
+        } else {
+            gender = "Kvinde";
+        }
+
+        try {
+            allProfiles = rp.searchProfile(gender);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        searchModel.addAttribute("profile", allProfiles);
+    return "main";
+    }
+
+
+
+    // Delete Profile
     @PostMapping("/deleteprofile")
     public String deleteProfile(WebRequest deleteProfile) {
         try {
@@ -68,17 +94,18 @@ public class DatingController {
         return "redirect:/";
     }
 
+    // Edit Profile
     @PostMapping("/editprofile")
     public String editProfile(WebRequest editProfile) {
         try {
-            String gender = "";
+            String gender = null;
             int id = Integer.parseInt(editProfile.getParameter("eId"));
             String name = editProfile.getParameter("eName");
-            if (editProfile.getParameter("pGender") != editProfile.getParameter("pGenderMand")) {
+            //String gender = editProfile.getParameter("eGender");
+            if (editProfile.getParameter("pGender") == editProfile.getParameter("pGenderMand")) {
                 gender = "Mand";
             } else {
                 gender = "Kvinde";
-                System.out.println("fejl");
             }
             String email = editProfile.getParameter("eEmail");
             String description = editProfile.getParameter("eDescription");
@@ -89,6 +116,7 @@ public class DatingController {
         return "redirect:/";
     }
 
+    // Search Profiles
     @GetMapping("searchprofiles")
     public String searchProfiles(Model searchModel, WebRequest searchProfile){
         String gender = searchProfile.getParameter("sGender");
@@ -107,6 +135,34 @@ public class DatingController {
         return "login";
     }
 
+
+    //Admin
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        //model.addAttribute("pLogin", new login());
+        //model.addAttribute("pName", "pKodeord");
+        return "admin";
+    }
+
+    //Om os
+    @GetMapping("/omos")
+    public String omos(Model model) {
+        return "omos";
+    }
+
+    //Sugar Mommy
+    @GetMapping("/sugarmommy")
+    public String sugarmommy(Model model) {
+        return "sugarmommy";
+    }
+
+    //Sugar Daddy
+    @GetMapping("/sugardaddy")
+    public String sugardaddy(Model model) {
+        return "sugardaddy";
+    }
+
+
     @GetMapping("/profile")
     public String profile(Model profileModel) {
         profileModel.addAttribute("profileList",allProfiles);
@@ -123,6 +179,7 @@ public class DatingController {
             throwables.printStackTrace();
         }
         return "redirect:/profile";
+
     }
 
     /*
