@@ -25,11 +25,14 @@
             <h2>Profiles</h2>
             <div th:each="allProfiles : ${profileList}">
                 <div>
+                    <form action="/profileId" method="post">
                     <!--- kodeord og gender er modsat hinanden, nød til at skrive kodeord, for at få gender -->
-                    <a onclick="profile"> <p th:text="${allProfiles.getName()}"></p></a>
-                    <p th:text="${allProfiles.getKodeord()}"></p>
-                    <p th:text="${allProfiles.getDescription()}"></p><br><br>
-                </div>
+                    <p th:text="${allProfiles.getName()}"></p>
+                    <p th:text="${allProfiles.getKodeord()}"></a>
+                    <p th:text="${allProfiles.getDescription()}"></p><br>
+                    <button class="btn btn-primary" type="submit" th:value="${allProfiles.getId()}" name="profileId">Søg nu</button>
+                </form>
+            </div>
             </div>
         </div>
 

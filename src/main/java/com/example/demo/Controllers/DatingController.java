@@ -56,7 +56,6 @@ public class DatingController {
 
         try {
             Profile p = allProfiles.get(0);
-            System.out.println(p.getId());
         } catch (IndexOutOfBoundsException e) {
             return "errorlogin";
         }
@@ -153,20 +152,23 @@ public class DatingController {
     @GetMapping("/profile")
     public String profile(Model profileModel) {
         profileModel.addAttribute("profileList",allProfiles);
+        System.out.println("inde");
         return "profile";
     }
 
-    @PostMapping("/getProfile")
-    public String uniqueProfile(WebRequest profile){
-        int profileId = Integer.parseInt(profile.getParameter("profileId"));
+    @PostMapping("/profileId")
+    public String getProfile(WebRequest profileClick){
+        String id = profileClick.getParameter("profileId");
+        System.out.println(id);
 
         try {
-            allProfiles = rp.profile(profileId);
+            allProfiles = rp.profile(Integer.parseInt(id));
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            System.out.println("hov");
         }
         return "redirect:/profile";
-
     }
 
     /*
