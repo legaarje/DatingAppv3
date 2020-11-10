@@ -1,18 +1,25 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <div th:insert="fragments/header :: header"></div>
+    <div th:insert="fragments/menu :: menu"></div>
+
+    <title>KEA Dating - Main!</title>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
+
 <body>
 
-    <div id="form-container">
-        <form id="searchProfiles" action="/searchprofiles" method="get">
-            <label for="searchProfiles"></label>
-            <input type="text" id="sGender" name="sGender" placeholder="Køn..."><br><br>
-            <input type="submit" id="submit-form" value="Søg nu!!">
-        </form>
-    </div>
+<div th:insert="fragments/jumbotron :: jumbotron">
+</div>
+
+
+<div class="container" id="main">
+
+    <!-- Indsæt indhold her -->
+    <div class="row">
 
     <div class="col" id="profile">
         <h2>Profiles</h2>
@@ -21,9 +28,51 @@
         </div>
     </div>
 
-    <form id="toMainPage" action="/" method="get">
-        <input type="submit" id="mainpage-form" value="tilbage">
-    </form>
+
+        <div class="col-md-6">
+
+
+            <div id="form-container">
+                <h2>Søg profiler efter køn</h2>
+                <form action="/searchGender" method="post" enctype="multipart/form-data">
+                    <!-- <label for="searchgender"></label> -->
+                    <div class="form-group">
+                        <input type="radio" name="pGender" value="pGenderMand"> Mand
+                        <input type="radio" name="pGender" value="pGenderKvinde"> Kvinde<br>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Søg nu</button>
+                </form>
+
+            </div>
+
+            <br><br>
+            <h2>Profiler</h2>
+
+            <tr th:each="profile : ${profile}">
+                <td th:text="${profile.name}" /><br>
+                <td th:text="${profile.gender}" /><br>
+                <td th:text="${profile.description}" /><br><br>
+            </tr>
+
+            <br><br>
+
+            <form id="toMainPage" action="/" method="get">
+                <button class="btn btn-primary" type="submit"><-- Tilbage</button>
+            </form>
+        </div>
+    </div>
+</div> <!-- /container -->
+<br>
+<hr>
+
+    <div id="profileSite-container">
+        <form id="profileSite" action="/getProfile" method="post">
+            <input type="submit" id="profileSubmit-form" value="Bruger profil!!">
+        </form>
+    </div>
+
 
 </body>
+<div th:insert="fragments/footer :: footer"></div>
+
 </html>

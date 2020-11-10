@@ -1,29 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <div th:insert="fragments/header :: header"></div>
+    <div th:insert="fragments/menu :: menu"></div>
+
+    <title>KEA Dating - Profile</title>
     <meta charset="UTF-8">
+
     <div th:insert="fragments/header :: header"></div>
     <div th:insert="fragments/menu :: menu"></div>
     <title>Title</title>
+
 </head>
+
 <body>
+
+
+<div class="row">
+    <div class="col">
 
     <div th:insert="fragments/jumbotron :: jumbotron"></div>
 
-    <div id="form-container">
-        <form id="profile" action="/profile" method="get">
+    <div id="profileSite-container">
+        <form id="profileSite" action="/getProfile" method="post">
             <label for="profileId"></label>
             <input type="text" id="profileId" name="profileId" placeholder="id på bruger..."><br><br>
-            <input type="submit" id="submit-form" value="søg efter bruger!!">
+            <input type="submit" id="profileSubmit-form" value="søg efter bruger!!">
         </form>
     </div>
 
-    <div class="col" id="main">
-        <h2>Profiles</h2>
-        <div th:each="allProfiles : ${profile}">
-            <h th:text="${allProfiles}" />
+
+            <div class="col" id="profileList">
+                <h2>Profiles</h2>
+                <div th:each="allProfiles : ${profileList}">
+                    <div>
+                        <h4 th:text="${allProfiles.getName()}"></h4>
+                        <h4 th:text="${allProfiles.getGender()}"></h4>
+                        <h4 th:text="${allProfiles.getDescription()}"></h4>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 </body>
+<div th:insert="fragments/footer :: footer"></div>
 </html>
