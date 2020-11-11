@@ -74,22 +74,17 @@ public class DatingController {
     @PostMapping("/editprofile")
     public String editProfile(WebRequest editProfile) {
         try {
-            String gender = null;
             int id = Integer.parseInt(editProfile.getParameter("eId"));
             String name = editProfile.getParameter("eName");
-            //String gender = editProfile.getParameter("eGender");
-            if (editProfile.getParameter("pGender") == editProfile.getParameter("pGenderMand")) {
-                gender = "Mand";
-            } else {
-                gender = "Kvinde";
-            }
+            String gender = editProfile.getParameter("eGender");
             String email = editProfile.getParameter("eEmail");
             String description = editProfile.getParameter("eDescription");
             rp.editProfile(id,name,gender,email,description);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return "redirect:/";
+        return "redirect:/profile";
     }
 
     // Search Profiles
