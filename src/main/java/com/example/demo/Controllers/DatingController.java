@@ -18,8 +18,7 @@ public class DatingController {
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> searchLogin = new ArrayList<>();
-    Profile currentLogin = new Profile(0,null,null,null,null,null,0);
-    // Profile profile = new Profile(0,null,null,null,null,null, 0, null);
+    Profile currentLogin = new Profile(0,null,null,null,null,null,0,null);
 
 
     // Root
@@ -38,7 +37,8 @@ public class DatingController {
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-
+        rp.createProfile(name, kodeord, gender, email, description, admin);
+/*
             if (rp.testUsernameViability("pEmail")) {
                 rp.createProfile(name, kodeord, gender, email, description, admin);
                 System.out.println("laver profil");
@@ -46,6 +46,8 @@ public class DatingController {
                 System.out.println("fejl");
                 return "errorcreate";
             }
+
+ */
             return "login";
         }
 
@@ -158,9 +160,20 @@ public class DatingController {
         }
 
         if ( currentLogin.getId()==Integer.parseInt(id)) {
-
+            System.out.println("admin");
+        } else {
+            System.out.println("normal bruger");
         }
 
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/addtokandidat")
+    public String kandidatList(WebRequest kandidatButton) throws SQLException {
+        String candidateId = kandidatButton.getParameter("addToKandidat");
+        int currentId = currentLogin.getId();
+        rp.addCandidate(candidateId,currentId);
+        System.out.println("Hej");
         return "redirect:/profile";
     }
 }

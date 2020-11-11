@@ -36,7 +36,8 @@ public class ProfileRepository {
                     rs.getString(4),
                     rs.getString(5),
                     rs.getString(6),
-                    rs.getInt(7));
+                    rs.getInt(7),
+                    rs.getString(8));
             allProfiles.add(temp);
         }
         return allProfiles;
@@ -54,13 +55,13 @@ public class ProfileRepository {
     public void createProfile(String pName, String pKodeord, String pGender, String pEmail, String pDescription, int pAdmin) throws SQLException {
         allProfiles.clear();
         //lavet et statement og eksekvere en query
-        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, kodeord, gender,email,description) VALUES (?,?,?,?,?);");
-
+        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, kodeord, gender,email,description, candidatelist) VALUES (?,?,?,?,?,?);");
         ps.setString(1,pName);
         ps.setString(2,pKodeord);
         ps.setString(3,pGender);
         ps.setString(4,pEmail);
         ps.setString(5,pDescription);
+        ps.setString(6,".");
 
         ps.executeUpdate();
     }
@@ -115,5 +116,12 @@ public class ProfileRepository {
         ps.setInt(1, id);
 
         return returnProfile(ps);
+    }
+
+    public void addCandidate(String candidateId, int currentId) throws SQLException {
+        PreparedStatement ps = establishConnection().prepareStatement("UPDATE profiles SET candidatelist=concat(candidatelist, ?) where id = ?");
+        ps.setString(1,candidateId + ",");
+        ps.setInt(2,currentId);
+        ps.executeUpdate();
     }
 }
