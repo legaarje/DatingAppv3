@@ -19,7 +19,7 @@ public class ProfileRepository {
     //List<Profile> searchLogin = new ArrayList<Profile>();
 
     //Denne metode laver forbindelsen til mysql databasen
-    private Connection establishConnection() throws SQLException {
+    public Connection establishConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app?serverTimezone=UTC", "root", "1");
         //standard: user=root, password=1
     }
