@@ -14,40 +14,40 @@ import java.util.List;
 public class ProfileRepository {
 
     //liste med alle profiler
-    List<Profile> allProfiles = new ArrayList<Profile>();
-    List<Profile> searchLogin = new ArrayList<Profile>();
+    List<Profile> allProfiles = new ArrayList<>();
+    //List<Profile> searchLogin = new ArrayList<Profile>();
 
     //Denne metode laver forbindelsen til mysql databasen
     private Connection establishConnection() throws SQLException {
-        Connection connectionToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app", "root", "1");
-        return connectionToDB;
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app?serverTimezone=UTC", "peter", "1");
+        //standard: user=root, password=1
     }
+    //Metode i stedet for dupliceret kode
+    //Foretager en ps.execute og læser resulSet ind i allProfiles array
+    public List<Profile> returnProfile(PreparedStatement ps) throws SQLException {
+        ResultSet rs = ps.executeQuery();
 
-    public List<Profile> listAllProfiles() {
-        allProfiles.clear();
-        try {
-            //lavet et statement og eksekvere en query
-            PreparedStatement ps = establishConnection().prepareStatement(" SELECT * FROM profiles;");
-            ResultSet rs = ps.executeQuery();
-
-            //lave resultattet om til objekter, og derefter ind i en arrayliste
-            while (rs.next()) {
-                Profile tmp = new Profile(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getInt(7));
-                  //      rs.getBlob(8));
-                allProfiles.add(tmp);
-            }
-
-        } catch (SQLException e) {
-            return null;
+        //lave resultattet om til objekter, og derefter ind i en arrayliste
+        while (rs.next()) {
+            Profile temp = new Profile(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getInt(7));
+            allProfiles.add(temp);
         }
         return allProfiles;
+    }
+
+    public List<Profile> listAllProfiles() throws SQLException{
+        allProfiles.clear();
+        //lavet et statement og eksekvere en query
+        PreparedStatement ps = establishConnection().prepareStatement(" SELECT * FROM profiles;");
+
+        return returnProfile(ps);
     }
 
 
@@ -62,25 +62,16 @@ public class ProfileRepository {
         ps.setString(4,pEmail);
         ps.setString(5,pDescription);
 
-        int rs = ps.executeUpdate();
-
-        PreparedStatement pss = establishConnection().prepareStatement("SELECT * FROM profiles LIMIT ?,1");
-        pss.setInt(1,rs);
-        ResultSet rss = pss.executeQuery();
-
-        while (rss.next()) {
-            Profile temp = new Profile(
-                    rss.getInt(1),
-                    rss.getString(2),
-                    rss.getString(3),
-                    rss.getString(4),
-                    rss.getString(5),
-                    rss.getString(6),
-                    rss.getInt(7));
-           //         rss.getBlob(8));
-            allProfiles.add(temp);
-
-        }
+        ps.executeUpdate();
+    }
+    //metode til at teste om et username allerede findes i databasen
+    public boolean testUsernameViability(String email) throws SQLException{
+        boolean usernameIsViable;
+        PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where email = ?");
+        ps.setString(1,email);
+        ResultSet rs = ps.executeQuery();
+        usernameIsViable = rs.next();
+        return usernameIsViable;
     }
 
     public void deleteProfile(int id) throws SQLException {
@@ -103,20 +94,8 @@ public class ProfileRepository {
         allProfiles.clear();
         PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where gender like ?");
         ps.setString(1,gender);
-        ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Profile temp = new Profile(
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4),
-                    rs.getString(5),
-                    rs.getString(6),
-                    rs.getInt(7));
-            allProfiles.add(temp);
-        }
-        return allProfiles;
+        return returnProfile(ps);
     }
 
 
@@ -125,40 +104,16 @@ public class ProfileRepository {
         PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where email = ? AND kodeord = ?");
         ps.setString(1, email);
         ps.setString(2, kodeord);
-        ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Profile uniquelogin = new Profile(
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4),
-                    rs.getString(5),
-                    rs.getString(6),
-                    rs.getInt(7));
-            allProfiles.add(uniquelogin);
-        }
-        return allProfiles;
+        return returnProfile(ps);
     }
 
+    // Finder bruger med x id
     public List<Profile> profile(int id) throws SQLException {
         allProfiles.clear();
         PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles where id = ?");
         ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Profile profile = new Profile(
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4),
-                    rs.getString(5),
-                    rs.getString(6),
-                    rs.getInt(7));
-            allProfiles.add(profile);
-
-        }
-        return allProfiles;
+        return returnProfile(ps);
     }
 }
