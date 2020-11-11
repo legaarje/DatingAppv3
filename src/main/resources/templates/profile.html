@@ -3,20 +3,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml">
 
 <head>
-    <div th:insert="fragments/header :: header"></div>
-    <div th:insert="fragments/menu :: menu"></div>
-
-    <title>KEA Dating - Profile</title>
+    <title>KEA Dating - Profil</title>
     <meta charset="UTF-8">
-
-    <div th:insert="fragments/header :: header"></div>
-    <div th:insert="fragments/menu :: menu"></div>
-    <title>Title</title>
-
 </head>
 
 <body>
-
+<div th:insert="fragments/header :: header"></div>
+<div th:insert="fragments/menu :: menu"></div>
 
 <div class="row">
     <div class="col">
@@ -38,7 +31,7 @@
                 <button class="btn btn-primary" type="submit" th:value="${allProfiles.getId()}" name="addToKandidat">Tilføj til favoritter</button>
                 </form>
 
-
+                <!--
                 <div id="edit-container">
                     <h2>Ret profil</h2>
                     <div id="editProfile" action="/editprofile" method="post" enctype="multipart/form-data" >
@@ -55,7 +48,7 @@
                         </form>
                     </div>
                 </div>
-
+                -->
 
                 </div>
             </div>

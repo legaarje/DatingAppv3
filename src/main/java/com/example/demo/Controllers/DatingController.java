@@ -18,6 +18,7 @@ public class DatingController {
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> searchLogin = new ArrayList<>();
+    List<Profile> allCandidates = new ArrayList<>();
     Profile currentLogin = new Profile(0,null,null,null,null,null,0,null);
 
 
@@ -100,12 +101,21 @@ public class DatingController {
     @GetMapping("/main")
     public String searchProfiles(Model searchModel, WebRequest searchProfile){
         String gender = searchProfile.getParameter("pGender");
+
         try {
             allProfiles = rp.searchProfile(gender);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         searchModel.addAttribute("profileList",allProfiles);
+        return "main";
+    }
+
+    @PostMapping("/maincandidate")
+    public String searchCandidates(Model candidateModel) throws SQLException {
+        allCandidates = rp.candidateList(currentLogin.getId());
+        candidateModel.addAttribute("candidateList",allCandidates);
         return "main";
     }
 
@@ -158,13 +168,6 @@ public class DatingController {
             throwables.printStackTrace();
             System.out.println("hov");
         }
-
-        if ( currentLogin.getId()==Integer.parseInt(id)) {
-            System.out.println("admin");
-        } else {
-            System.out.println("normal bruger");
-        }
-
         return "redirect:/profile";
     }
 
