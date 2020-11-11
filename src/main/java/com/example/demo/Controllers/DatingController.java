@@ -24,7 +24,7 @@ public class DatingController {
 
     // Root
     @GetMapping("/")
-    public String index(Model profileModel){
+    public String index(Model profileModel) throws SQLException{
         profileModel.addAttribute("profile", rp.listAllProfiles());
         return "index";
     }
@@ -38,8 +38,13 @@ public class DatingController {
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        rp.createProfile(name, kodeord, gender,email,description,admin);
-        return "redirect:/login";
+        if (rp.testUsernameViability("pEmail")){
+            rp.createProfile(name, kodeord, gender,email,description,admin);
+            return "redirect:/login";
+        } else {
+            System.out.println("fejl");
+           return "redirect:/";
+        }
     }
 
     @PostMapping("/correctlogin")
