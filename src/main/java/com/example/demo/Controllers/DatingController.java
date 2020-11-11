@@ -39,7 +39,7 @@ public class DatingController {
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
         rp.createProfile(name, kodeord, gender, email, description, admin);
-/*
+/*          //virker ikke :(
             if (rp.testUsernameViability("pEmail")) {
                 rp.createProfile(name, kodeord, gender, email, description, admin);
                 System.out.println("laver profil");
@@ -125,31 +125,6 @@ public class DatingController {
         return "login";
     }
 
-
-    //Admin
-    @GetMapping("/admin")
-    public String admin(Model model) {
-        return "admin";
-    }
-
-    //Om os
-    @GetMapping("/omos")
-    public String omos(Model model) {
-        return "omos";
-    }
-
-    //Sugar Mommy
-    @GetMapping("/sugarmommy")
-    public String sugarmommy(Model model) {
-        return "sugarmommy";
-    }
-
-    //Sugar Daddy
-    @GetMapping("/sugardaddy")
-    public String sugardaddy(Model model) {
-        return "sugardaddy";
-    }
-
     @GetMapping("/profile")
     public String profile(Model profileModel) {
         profileModel.addAttribute("profileList",allProfiles);
@@ -179,6 +154,31 @@ public class DatingController {
         System.out.println("Hej");
         return "redirect:/profile";
     }
+
+    //Admin
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        return "admin";
+    }
+
+    //Om os
+    @GetMapping("/omos")
+    public String omos(Model model) {
+        return "omos";
+    }
+
+    //Sugar Mommy
+    @GetMapping("/sugarmommy")
+    public String sugarmommy(Model model) {
+        return "sugarmommy";
+    }
+
+    //Sugar Daddy
+    @GetMapping("/sugardaddy")
+    public String sugardaddy(Model model) {
+        return "sugardaddy";
+    }
+
 }
 
 

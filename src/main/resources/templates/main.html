@@ -37,7 +37,7 @@
                 <div th:each="allCandidates : ${candidateList}">
                     <div>
                         <!--- kodeord og gender er modsat hinanden, nød til at skrive kodeord, for at få gender -->
-                        <p th:text="${allCandidates.getName()}"></p>
+                        <p th:text=${allCandidates.getName()}"></p>
                         <p th:text="${allCandidates.getKodeord()}"></p>
                         <p th:text="${allCandidates.getDescription()}"></p>
                         <button class="btn btn-primary" type="submit" th:value="${allCandidates.getId()}" name="profileId">Se profil</button><br>
