@@ -20,7 +20,7 @@ public class ProfileRepository {
 
     //Denne metode laver forbindelsen til mysql databasen
     public Connection establishConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app?serverTimezone=UTC", "root", "1");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app?serverTimezone=UTC", "peter", "1");
         //standard: user=root, password=1
     }
     //Metode i stedet for dupliceret kode
@@ -52,7 +52,6 @@ public class ProfileRepository {
 
         return returnProfile(ps);
     }
-
 
     public void createProfile(String pName, String pKodeord, String pGender, String pEmail, String pDescription, int pAdmin) throws SQLException {
         allProfiles.clear();
@@ -115,7 +114,7 @@ public class ProfileRepository {
         }
         String[] candidateAraray = candidateList.split(",");
 
-        ResultSet rss = null;
+        //ResultSet rss = null;
         for ( int i = 0; i <= candidateAraray.length-1; i++) {
             PreparedStatement pss = establishConnection().prepareStatement("SELECT * FROM profiles WHERE id = ?");
             pss.setString(1, candidateAraray[i]);
@@ -124,7 +123,6 @@ public class ProfileRepository {
         System.out.println(allCandidates.toString());
         return allCandidates;
     }
-
 
     public List<Profile> searchLogin(String email, String kodeord) throws SQLException {
         allProfiles.clear();

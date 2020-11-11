@@ -30,8 +30,8 @@ public class MessageRepository {
 
         ResultSet rs = ps.executeQuery();
         while (rs.next()){
-           Message temp = new Message(rs.getInt(1), rs.getInt(2), rs.getString(3));
-           allMessages.add(temp);
+            Message temp = new Message(rs.getInt(1), rs.getInt(2), rs.getString(3));
+            allMessages.add(temp);
         }
         return allMessages;
     }

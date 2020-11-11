@@ -17,10 +17,8 @@ public class DatingController {
 
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
-    List<Profile> searchLogin = new ArrayList<>();
     List<Profile> allCandidates = new ArrayList<>();
     Profile currentLogin = new Profile(0,null,null,null,null,null,0,null);
-
 
     // Root
     @GetMapping("/")
@@ -49,12 +47,11 @@ public class DatingController {
             }
 
  */
-            return "login";
-        }
+        return "login";
+    }
 
     @PostMapping("/correctlogin")
     public String login(WebRequest loginData)  throws SQLException{
-
         String email = loginData.getParameter("pEmail");
         String kodeord = loginData.getParameter("pKodeord");
         allProfiles = rp.searchLogin(email,kodeord);
@@ -84,7 +81,8 @@ public class DatingController {
     @PostMapping("/editprofile")
     public String editProfile(WebRequest editProfile) {
         try {
-            int id = Integer.parseInt(editProfile.getParameter("eId"));
+            int id = currentLogin.getId();
+            //int id = Integer.parseInt(editProfile.getParameter("eId"));
             String name = editProfile.getParameter("eName");
             String gender = editProfile.getParameter("eGender");
             String email = editProfile.getParameter("eEmail");
@@ -101,10 +99,8 @@ public class DatingController {
     @GetMapping("/main")
     public String searchProfiles(Model searchModel, WebRequest searchProfile){
         String gender = searchProfile.getParameter("pGender");
-
         try {
             allProfiles = rp.searchProfile(gender);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,6 +113,14 @@ public class DatingController {
         allCandidates = rp.candidateList(currentLogin.getId());
         candidateModel.addAttribute("candidateList",allCandidates);
         return "main";
+    }
+
+    //myprofile
+    @GetMapping("/myprofile")
+    public String myprofile(Model myprofileModel) throws SQLException {
+        int id = currentLogin.getId();
+        myprofileModel.addAttribute("profileID",rp.profile(id));
+        return "myprofile";
     }
 
     //Login
@@ -143,6 +147,7 @@ public class DatingController {
             throwables.printStackTrace();
             System.out.println("hov");
         }
+
         return "redirect:/profile";
     }
 
@@ -157,25 +162,25 @@ public class DatingController {
 
     //Admin
     @GetMapping("/admin")
-    public String admin(Model model) {
+    public String admin() {
         return "admin";
     }
 
     //Om os
     @GetMapping("/omos")
-    public String omos(Model model) {
+    public String omos() {
         return "omos";
     }
 
     //Sugar Mommy
     @GetMapping("/sugarmommy")
-    public String sugarmommy(Model model) {
+    public String sugarmommy() {
         return "sugarmommy";
     }
 
     //Sugar Daddy
     @GetMapping("/sugardaddy")
-    public String sugardaddy(Model model) {
+    public String sugardaddy() {
         return "sugardaddy";
     }
 

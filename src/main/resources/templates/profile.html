@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>KEA Dating - Profil</title>
     <meta charset="UTF-8">
+    <title>KEA Dating - Profil</title>
 </head>
 
 <body>
 <div th:insert="fragments/header :: header"></div>
-<div th:insert="fragments/menu :: menu"></div>
+<div th:insert="fragments/menuloggedin :: menuloggedin"></div>
+<div th:insert="fragments/jumbotron :: jumbotron"></div>
 
 <div class="row">
     <div class="col">
 
-    <div th:insert="fragments/jumbotron :: jumbotron"></div>
+        <!--    <div th:insert="fragments/jumbotron :: jumbotron"></div>-->
 
         <div class="col" id="profileList">
             <div th:each="allProfiles : ${profileList}">
@@ -28,7 +28,7 @@
                     <h4 th:text="${allProfiles.getAdmin()}"></h4>
                 </div>
                 <form action="/addtokandidat" method="post">
-                <button class="btn btn-primary" type="submit" th:value="${allProfiles.getId()}" name="addToKandidat">Tilføj til favoritter</button>
+                    <button class="btn btn-primary" type="submit" th:value="${allProfiles.getId()}" name="addToKandidat">Tilføj til favoritter</button>
                 </form>
 
                 <!--
@@ -49,12 +49,11 @@
                     </div>
                 </div>
                 -->
-
-                </div>
             </div>
         </div>
     </div>
+</div>
 
-</body>
 <div th:insert="fragments/footer :: footer"></div>
+</body>
 </html>
