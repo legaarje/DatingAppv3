@@ -32,15 +32,9 @@ public class DatingController {
     // Create profile
     @PostMapping("/createprofile")
     public String createProfile(WebRequest createProfileData) throws SQLException {
-        String gender = null;
         int admin = 0;
         String name = createProfileData.getParameter("pName");
-        if (createProfileData.getParameter("pGender").equals(createProfileData.getParameterValues("pGenderMand"))) {
-            gender = "Mand";
-        } else {
-            gender = "Kvinde";
-        }
-       // String gender = createProfileData.getParameter("pGender");
+        String gender = createProfileData.getParameter("pGender");
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
@@ -101,17 +95,11 @@ public class DatingController {
     // Search Profiles
     @GetMapping("/main")
     public String searchProfiles(Model searchModel, WebRequest searchProfile){
-        String gender = "";
-
-        if (searchProfile.getParameter("pGender").equals("pGenderMand"))  {
-            gender = "Mand";
-        } else {
-            gender = "Kvinde";
-        }
+        String gender = searchProfile.getParameter("pGender");
         try {
             allProfiles = rp.searchProfile(gender);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         searchModel.addAttribute("profileList",allProfiles);
         return "main";
