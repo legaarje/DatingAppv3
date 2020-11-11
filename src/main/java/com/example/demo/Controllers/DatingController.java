@@ -38,14 +38,16 @@ public class DatingController {
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        if (rp.testUsernameViability("pEmail")){
-            rp.createProfile(name, kodeord, gender,email,description,admin);
-            return "redirect:/login";
-        } else {
-            System.out.println("fejl");
-           return "redirect:/";
+
+            if (rp.testUsernameViability("pEmail")) {
+                rp.createProfile(name, kodeord, gender, email, description, admin);
+                System.out.println("laver profil");
+            } else {
+                System.out.println("fejl");
+                return "errorcreate";
+            }
+            return "login";
         }
-    }
 
     @PostMapping("/correctlogin")
     public String login(WebRequest loginData)  throws SQLException{
