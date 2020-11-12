@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Models.Profile;
+import com.example.demo.Repositories.MessageRepository;
 import com.example.demo.Repositories.ProfileRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import java.util.List;
 public class DatingController {
 
     ProfileRepository rp = new ProfileRepository();
+    MessageRepository mp = new MessageRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> allCandidates = new ArrayList<>();
     Profile currentLogin = new Profile(0,null,null,null,null,null,0,null);
@@ -184,6 +186,15 @@ public class DatingController {
         return "sugardaddy";
     }
 
+    //Send message
+    @PostMapping("/sendmessage")
+    public String sendMessage(WebRequest receiverBtn, WebRequest messageInput) throws SQLException{
+        int receiverId = Integer.parseInt(receiverBtn.getParameter("getReceiverId"));
+        String msg = messageInput.getParameter("getMessage");
+        mp.sendMessage(currentLogin.getId(),receiverId,msg);
+        System.out.println(receiverId + ", " + msg);
+        return "redirect:/profile";
+    }
 }
 
 
