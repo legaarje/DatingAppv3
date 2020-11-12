@@ -8,7 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +26,7 @@ public class DatingController {
     MessageRepository mp = new MessageRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> allCandidates = new ArrayList<>();
-    Profile currentLogin = new Profile(0,null,null,null,null,null,0,null);
+    Profile currentLogin = new Profile(0,null,null,null,null,null,0,null,null,null);
 
     // Root
     @GetMapping("/")
@@ -31,22 +37,15 @@ public class DatingController {
 
     // Create profile
     @PostMapping("/createprofile")
-    public String createProfile(WebRequest createProfileData) throws SQLException {
+    public String createProfile(WebRequest createProfileData, @RequestParam("file") MultipartFile file) throws SQLException, IOException {
         int admin = 0;
         String name = createProfileData.getParameter("pName");
         String gender = createProfileData.getParameter("pGender");
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        rp.createProfile(name, kodeord, gender, email, description, admin);
-/*          //virker ikke :(
-            if (rp.testUsernameViability("pEmail")) {
-                rp.createProfile(name, kodeord, gender, email, description, admin);
-                System.out.println("laver profil");
-            } else {
-                System.out.println("fejl");
-                return "errorcreate";
-            }
+        rp.createProfile(name, kodeord, gender, email, description, admin,file);
+/*
 
  */
         return "login";
@@ -139,6 +138,7 @@ public class DatingController {
 
     @PostMapping("/profileId")
     public String getProfile(WebRequest profileClick){
+        System.out.println("test");
         String id = profileClick.getParameter("profileId");
         System.out.println(id);
 

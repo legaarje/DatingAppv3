@@ -23,9 +23,10 @@
                 <div>
                     <form action="/profileId" method="post">
                         <!--- kodeord og gender er modsat hinanden, nød til at skrive kodeord, for at få gender -->
+                        <img class="le" th:src="'data:image/jpeg;base64,' + ${allProfiles.getImgBase64()}" /><br>
                         <p th:text="${allProfiles.getName()}"></p>
                         <p th:text="${allProfiles.getKodeord()}"></p>
-                        <p th:text="${allProfiles.getDescription()}"></p>
+                        <p th:text="${allProfiles.getDescription()}"></p><br>
                         <button class="btn btn-primary" type="submit" th:value="${allProfiles.getId()}" name="profileId">Se profil</button><br>
                     </form>
                 </div>

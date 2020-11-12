@@ -9,6 +9,11 @@ import java.sql.ResultSet;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+import javax.sql.rowset.serial.SerialBlob;
+
+import java.awt.*;
+import java.io.IOException;
 
 @Repository
 public class ProfileRepository {
@@ -20,7 +25,7 @@ public class ProfileRepository {
 
     //Denne metode laver forbindelsen til mysql databasen
     public Connection establishConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app?serverTimezone=UTC", "peter", "1");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app?serverTimezone=UTC", "root", "1");
         //standard: user=root, password=1
     }
     //Metode i stedet for dupliceret kode
@@ -38,7 +43,9 @@ public class ProfileRepository {
                     rs.getString(5),
                     rs.getString(6),
                     rs.getInt(7),
-                    rs.getString(8));
+                    rs.getString(8),
+                    rs.getBytes(9),
+                    rs.getString(2));
             allProfiles.add(temp);
         }
         return allProfiles;
@@ -53,17 +60,20 @@ public class ProfileRepository {
         return returnProfile(ps);
     }
 
-    public void createProfile(String pName, String pKodeord, String pGender, String pEmail, String pDescription, int pAdmin) throws SQLException {
+    public void createProfile(String pName, String pKodeord, String pGender, String pEmail, String pDescription, int pAdmin, MultipartFile file) throws SQLException, IOException {
         allProfiles.clear();
         allCandidates.clear();
+        byte[] fileAsBytes = file.getBytes();
+        Blob fileAsBlob = new SerialBlob(fileAsBytes);
         //lavet et statement og eksekvere en query
-        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, kodeord, gender,email,description, candidatelist) VALUES (?,?,?,?,?,?);");
+        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, kodeord, gender,email,description, candidatelist, image) VALUES (?,?,?,?,?,?,?);");
         ps.setString(1,pName);
         ps.setString(2,pKodeord);
         ps.setString(3,pGender);
         ps.setString(4,pEmail);
         ps.setString(5,pDescription);
         ps.setString(6,",");
+        ps.setBlob(7, fileAsBlob);
 
         ps.executeUpdate();
     }

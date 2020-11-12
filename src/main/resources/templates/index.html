@@ -29,7 +29,8 @@
                         <input type="text" id="pKodeord" name="pKodeord" placeholder="Kodeord..."><br>
                         <input type="text" id="pEmail" name="pEmail" placeholder="Mailadresse..."><br>
                         <input type="text" id="pDescription" name="pDescription" placeholder="Om dig selv..."><br>
-                        <!-- <input type="submit" id="submit-form" value="Opret profil"> -->
+                        <label for="file">Vælg dit billede</label>
+                        <input type="file" class="form-control-file" name="file" id="file" required>
                     </div>
                     <button class="btn btn-primary" type="submit">Opret profil</button>
                 </form>
@@ -45,7 +46,7 @@
                 <h2>Slet profil</h2>
                 <form id="delete-form" action="/deleteprofile" method="post">
                     <div class="form-group">
-                        <input type="text" id="delete" name="delete" placeholder="Vælg bruger ID..."><br><br>
+                        <input type id="delete" name="delete" placeholder="Vælg bruger ID..."><br><br>
                     </div>
                     <button class="btn btn-primary" type="submit">Slet profil</button>
                 </form>
