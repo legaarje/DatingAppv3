@@ -17,7 +17,6 @@
         <div class="col" id="profileList">
             <div th:each="allProfiles : ${profileList}">
                 <div>
-                    <img class="le" th:src="'data:image/jpeg;base64,' + ${allProfiles.getImgBase64()}" />
                     <h4 th:text="${allProfiles.getId()}"></h4>
                     <h4 th:text="${allProfiles.getName()}"></h4>
                     <h4 th:text="${allProfiles.getKodeord()}"></h4>

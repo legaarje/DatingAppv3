@@ -1,5 +1,7 @@
 package com.example.demo.Models;
 
+import org.apache.commons.codec.binary.Base64;
+
 public class Profile {
 
     private int id;
@@ -8,10 +10,12 @@ public class Profile {
     private String gender;
     private String email;
     private String description;
-    //private Blob picture;
     private int admin;
+    private String candidatelist;
+    private String imgBase64;
+    private byte[] img;
 
-    public Profile(int id, String name, String kodeord, String gender, String email, String description, int admin) {
+    public Profile(int id, String name, String kodeord, String gender, String email, String description, int admin, String candidatelist, byte[] img, String imgBase64) {
         this.id = id;
         this.name = name;
         this.kodeord = kodeord;
@@ -19,12 +23,14 @@ public class Profile {
         this.email = email;
         this.description = description;
         this.admin = admin;
-    //    this.picture = picture;
+        this.candidatelist = candidatelist;
+        this.img = img;
+        this.imgBase64 = byteArrayAs64String();
     }
 
     @Override
     public String toString() {
-        return "id=" + id + ",  " + name + ", " + kodeord + ", " + gender + ", "+ email + ", " + description + ", " + admin;
+        return "id=" + id + ",  " + name + ", " + kodeord + ", " + gender + ", " + email + ", " + description + ", " + admin;
     }
 
     public int getId() {
@@ -41,6 +47,14 @@ public class Profile {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getKodeord() {
+        return kodeord;
+    }
+
+    public void setKodeord(String kodeord) {
+        this.kodeord = kodeord;
     }
 
     public String getGender() {
@@ -67,29 +81,37 @@ public class Profile {
         this.description = description;
     }
 
-  /*  public Blob getPicture() {
-        return picture;
-    }
-
-    public void setPicture(Blob picture) {
-        this.picture = picture;
-    }
-    */
-    public String getKodeord() {
-        return kodeord;
-    }
-
-    public void setKodeord() {
-        this.kodeord = kodeord;
+    private String byteArrayAs64String() {
+        return Base64.encodeBase64String(this.img);
     }
 
     public int getAdmin() {
         return admin;
     }
 
-    public void setAdmin() {
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
+
+    public String getImgBase64() {
+        return this.imgBase64;
+    }
+
+    public void setAdmin(int admin) {
         this.admin = admin;
     }
 
+    public String getCandidatelist() {
+        return candidatelist;
+    }
 
+    public void setCandidatelist(String candidatelist) {
+        this.candidatelist = candidatelist;
+    }
 }
+
+

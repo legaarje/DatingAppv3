@@ -1,13 +1,20 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Models.Profile;
+import com.example.demo.Repositories.MessageRepository;
 import com.example.demo.Repositories.ProfileRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,71 +23,48 @@ import java.util.List;
 public class DatingController {
 
     ProfileRepository rp = new ProfileRepository();
+    MessageRepository mp = new MessageRepository();
     List<Profile> allProfiles = new ArrayList<>();
-    List<Profile> searchLogin = new ArrayList<>();
-    // Profile profile = new Profile(0,null,null,null,null,null, 0, null);
-
+    List<Profile> allCandidates = new ArrayList<>();
+    Profile currentLogin = new Profile(0,null,null,null,null,null,0,null,null,null);
 
     // Root
     @GetMapping("/")
-    public String index(Model profileModel){
+    public String index(Model profileModel) throws SQLException{
         profileModel.addAttribute("profile", rp.listAllProfiles());
         return "index";
     }
 
     // Create profile
     @PostMapping("/createprofile")
-    public String createProfile(WebRequest createProfileData) throws SQLException {
-        String gender = null;
+    public String createProfile(WebRequest createProfileData, @RequestParam("file") MultipartFile file) throws SQLException, IOException {
         int admin = 0;
         String name = createProfileData.getParameter("pName");
-        if (createProfileData.getParameter("pGender") == createProfileData.getParameter("pGenderMand")) {
-            gender = "Mand";
-        } else {
-            gender = "Kvinde";
-        }
-       // String gender = createProfileData.getParameter("pGender");
+        String gender = createProfileData.getParameter("pGender");
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        rp.createProfile(name, kodeord, gender,email,description,admin);
-        return "redirect:/";
+        rp.createProfile(name, kodeord, gender, email, description, admin,file);
+/*
+
+ */
+        return "login";
     }
 
-    // Correct login
     @PostMapping("/correctlogin")
-    public String login(WebRequest loginData) throws SQLException {
-    String name = loginData.getParameter("pName");
-    String kodeord = loginData.getParameter("pKodeord");
-
-        //rp.searchLogin(name, kodeord).getId();
-
-       // rp.searchLogin(name, kodeord).getAdmin();
-
-        return "main";
-    }
-
-    // Main
-    @PostMapping("/main")
-    public String searchGender(Model searchModel, WebRequest searchProfile){
-            String gender = null;
-
-        if (searchProfile.getParameter("pGender") == searchProfile.getParameter("pGenderMand")) {
-            gender = "Mand";
-        } else {
-            gender = "Kvinde";
-        }
+    public String login(WebRequest loginData)  throws SQLException{
+        String email = loginData.getParameter("pEmail");
+        String kodeord = loginData.getParameter("pKodeord");
+        allProfiles = rp.searchLogin(email,kodeord);
 
         try {
-            allProfiles = rp.searchProfile(gender);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            currentLogin = allProfiles.get(0);
+            System.out.println("logged in as " + allProfiles.get(0).toString());
+        } catch (IndexOutOfBoundsException e) {
+            return "errorlogin";
         }
-        searchModel.addAttribute("profile", allProfiles);
-    return "main";
+        return "main";
     }
-
-
 
     // Delete Profile
     @PostMapping("/deleteprofile")
@@ -98,35 +82,46 @@ public class DatingController {
     @PostMapping("/editprofile")
     public String editProfile(WebRequest editProfile) {
         try {
-            String gender = null;
-            int id = Integer.parseInt(editProfile.getParameter("eId"));
+            int id = currentLogin.getId();
+            //int id = Integer.parseInt(editProfile.getParameter("eId"));
             String name = editProfile.getParameter("eName");
-            //String gender = editProfile.getParameter("eGender");
-            if (editProfile.getParameter("pGender") == editProfile.getParameter("pGenderMand")) {
-                gender = "Mand";
-            } else {
-                gender = "Kvinde";
-            }
+            String gender = editProfile.getParameter("eGender");
             String email = editProfile.getParameter("eEmail");
             String description = editProfile.getParameter("eDescription");
             rp.editProfile(id,name,gender,email,description);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return "redirect:/";
+        return "redirect:/profile";
     }
 
     // Search Profiles
-    @GetMapping("searchprofiles")
+    @GetMapping("/main")
     public String searchProfiles(Model searchModel, WebRequest searchProfile){
-        String gender = searchProfile.getParameter("sGender");
+        String gender = searchProfile.getParameter("pGender");
         try {
             allProfiles = rp.searchProfile(gender);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        searchModel.addAttribute("profile",allProfiles);
+        searchModel.addAttribute("profileList",allProfiles);
         return "main";
+    }
+
+    @PostMapping("/maincandidate")
+    public String searchCandidates(Model candidateModel) throws SQLException {
+        allCandidates = rp.candidateList(currentLogin.getId());
+        candidateModel.addAttribute("candidateList",allCandidates);
+        return "main";
+    }
+
+    //myprofile
+    @GetMapping("/myprofile")
+    public String myprofile(Model myprofileModel) throws SQLException {
+        int id = currentLogin.getId();
+        myprofileModel.addAttribute("profileID",rp.profile(id));
+        return "myprofile";
     }
 
     //Login
@@ -135,65 +130,72 @@ public class DatingController {
         return "login";
     }
 
-
-    //Admin
-    @GetMapping("/admin")
-    public String admin(Model model) {
-        //model.addAttribute("pLogin", new login());
-        //model.addAttribute("pName", "pKodeord");
-        return "admin";
-    }
-
-    //Om os
-    @GetMapping("/omos")
-    public String omos(Model model) {
-        return "omos";
-    }
-
-    //Sugar Mommy
-    @GetMapping("/sugarmommy")
-    public String sugarmommy(Model model) {
-        return "sugarmommy";
-    }
-
-    //Sugar Daddy
-    @GetMapping("/sugardaddy")
-    public String sugardaddy(Model model) {
-        return "sugardaddy";
-    }
-
-
     @GetMapping("/profile")
     public String profile(Model profileModel) {
         profileModel.addAttribute("profileList",allProfiles);
         return "profile";
     }
 
-    @PostMapping("/getProfile")
-    public String uniqueProfile(WebRequest profile){
-        int profileId = Integer.parseInt(profile.getParameter("profileId"));
+    @PostMapping("/profileId")
+    public String getProfile(WebRequest profileClick){
+        System.out.println("test");
+        String id = profileClick.getParameter("profileId");
+        System.out.println(id);
 
         try {
-            allProfiles = rp.profile(profileId);
+            allProfiles = rp.profile(Integer.parseInt(id));
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            System.out.println("hov");
         }
+
         return "redirect:/profile";
-
     }
 
-    /*
-   @PostMapping("/login")
-    public String login(WebRequest login) throws SQLException {
-        String
-        model.addAttribute("contactForm", contactForm);
-        // Tilføj ArrayList og / eller FileWriter her?
-        return "contactReceipt";
-    } */
-
-   //         String name = createProfileData.getParameter("pName");
-
+    @PostMapping("/addtokandidat")
+    public String kandidatList(WebRequest kandidatButton) throws SQLException {
+        String candidateId = kandidatButton.getParameter("addToKandidat");
+        int currentId = currentLogin.getId();
+        rp.addCandidate(candidateId,currentId);
+        System.out.println("Hej");
+        return "redirect:/profile";
     }
+
+    //Admin
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
+
+    //Om os
+    @GetMapping("/omos")
+    public String omos() {
+        return "omos";
+    }
+
+    //Sugar Mommy
+    @GetMapping("/sugarmommy")
+    public String sugarmommy() {
+        return "sugarmommy";
+    }
+
+    //Sugar Daddy
+    @GetMapping("/sugardaddy")
+    public String sugardaddy() {
+        return "sugardaddy";
+    }
+
+    //Send message
+    @PostMapping("/sendmessage")
+    public String sendMessage(WebRequest receiverBtn, WebRequest messageInput) throws SQLException{
+        int receiverId = Integer.parseInt(receiverBtn.getParameter("getReceiverId"));
+        String msg = messageInput.getParameter("getMessage");
+        mp.sendMessage(currentLogin.getId(),receiverId,msg);
+        System.out.println(receiverId + ", " + msg);
+        return "redirect:/profile";
+    }
+}
 
 
 
