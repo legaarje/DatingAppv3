@@ -28,8 +28,9 @@
                     <form action="/profileId" method="post">
                     <!--- kodeord og gender er modsat hinanden, nød til at skrive kodeord, for at få gender -->
                     <p th:text="${allProfiles.getName()}"></p>
-                    <p th:text="${allProfiles.getKodeord()}"></a>
-                    <p th:text="${allProfiles.getDescription()}"></p><br>
+                    <p th:text="${allProfiles.getKodeord()}"></p>
+                    <p th:text="${allProfiles.getDescription()}"></p>
+                        <img class="le" th:src="'data:image/jpeg;base64,' + ${allProfiles.getImgBase64()}" /><br>
                     <button class="btn btn-primary" type="submit" th:value="${allProfiles.getId()}" name="profileId">Søg nu</button>
                 </form>
             </div>

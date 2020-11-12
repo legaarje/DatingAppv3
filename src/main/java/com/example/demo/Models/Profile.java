@@ -1,5 +1,7 @@
 package com.example.demo.Models;
 
+import org.apache.commons.codec.binary.Base64;
+
 public class Profile {
 
     private int id;
@@ -10,8 +12,10 @@ public class Profile {
     private String description;
     private int admin;
     private String candidatelist;
+    private String imgBase64;
+    private byte[] img;
 
-    public Profile(int id, String name, String kodeord, String gender, String email, String description, int admin, String candidatelist) {
+    public Profile(int id, String name, String kodeord, String gender, String email, String description, int admin, String candidatelist, byte[] img, String imgBase64) {
         this.id = id;
         this.name = name;
         this.kodeord = kodeord;
@@ -19,8 +23,10 @@ public class Profile {
         this.email = email;
         this.description = description;
         this.admin = admin;
-        //this.picture = picture;
         this.candidatelist = candidatelist;
+        this.img = img;
+        this.imgBase64 = byteArrayAs64String();
+
     }
 
     @Override
@@ -75,15 +81,22 @@ public class Profile {
     public void setDescription(String description) {
         this.description = description;
     }
-/*
-    public String getPicture() {
-        return picture;
+
+    public byte[] getImg() {
+        return img;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setImg(byte[] img) {
+        this.img = img;
     }
- */
+
+    public String getImgBase64(){
+        return this.imgBase64;
+    }
+
+    private String byteArrayAs64String(){
+        return Base64.encodeBase64String(this.img);
+    }
     public int getAdmin() {
         return admin;
     }

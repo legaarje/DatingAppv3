@@ -1,7 +1,13 @@
 package com.example.demo.Repositories;
 
 import com.example.demo.Models.Profile;
+//import com.example.demo.Models.ImageBlob;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
+import javax.sql.rowset.serial.SerialBlob;
+
+import java.awt.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,9 +23,11 @@ public class ProfileRepository {
     List<Profile> allProfiles = new ArrayList<>();
     //List<Profile> searchLogin = new ArrayList<Profile>();
 
+   // List<ImageBlob> blobList = new ArrayList<>();
+
     //Denne metode laver forbindelsen til mysql databasen
     private Connection establishConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app?serverTimezone=UTC", "root", "1");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/dating_app?serverTimezone=UTC", "root", "12957375a");
         //standard: user=root, password=1
     }
     //Metode i stedet for dupliceret kode
@@ -28,6 +36,7 @@ public class ProfileRepository {
         ResultSet rs = ps.executeQuery();
 
         //lave resultattet om til objekter, og derefter ind i en arrayliste
+
         while (rs.next()) {
             Profile temp = new Profile(
                     rs.getInt(1),
@@ -37,12 +46,33 @@ public class ProfileRepository {
                     rs.getString(5),
                     rs.getString(6),
                     rs.getInt(7),
-                    rs.getString(8));
+                    rs.getString(8),
+                    rs.getBytes(9),
+                    rs.getString(2));
             allProfiles.add(temp);
+
         }
         return allProfiles;
+
+    }
+   /* public List<ImageBlob> showBlob(int id) throws SQLException {
+        try {
+        PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profiles");
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            System.out.println(rs.getMetaData().getColumnCount());
+            ImageBlob tmp = new ImageBlob(rs.getBytes(9), rs.getString(2), rs.getInt(1));
+            blobList.add(tmp);
+        }
+        } catch (SQLException e) {
+            System.out.println("hov");
+            System.out.println(e.getSQLState());
+            System.out.println(e.getMessage());
+        }
+        return blobList;
     }
 
+    */
     public List<Profile> listAllProfiles() throws SQLException{
         allProfiles.clear();
         //lavet et statement og eksekvere en query
@@ -52,16 +82,18 @@ public class ProfileRepository {
     }
 
 
-    public void createProfile(String pName, String pKodeord, String pGender, String pEmail, String pDescription, int pAdmin) throws SQLException {
+    public void createProfile(String pName, String pKodeord, String pGender, String pEmail, String pDescription, int pAdmin, MultipartFile file) throws SQLException, IOException {
         allProfiles.clear();
+        byte[] fileAsBytes = file.getBytes();
+        Blob fileAsBlob = new SerialBlob(fileAsBytes);
         //lavet et statement og eksekvere en query
-        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, kodeord, gender,email,description, candidatelist) VALUES (?,?,?,?,?,?);");
+        PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profiles (name, kodeord, gender,email,description, image) VALUES (?,?,?,?,?,?);");
         ps.setString(1,pName);
         ps.setString(2,pKodeord);
         ps.setString(3,pGender);
         ps.setString(4,pEmail);
         ps.setString(5,pDescription);
-        ps.setString(6,".");
+        ps.setBlob(6, fileAsBlob);
 
         ps.executeUpdate();
     }

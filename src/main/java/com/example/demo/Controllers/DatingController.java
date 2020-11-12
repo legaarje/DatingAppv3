@@ -1,13 +1,20 @@
 package com.example.demo.Controllers;
 
+//import com.example.demo.Models.ImageBlob;
 import com.example.demo.Models.Profile;
 import com.example.demo.Repositories.ProfileRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +25,8 @@ public class DatingController {
     ProfileRepository rp = new ProfileRepository();
     List<Profile> allProfiles = new ArrayList<>();
     List<Profile> searchLogin = new ArrayList<>();
-    Profile currentLogin = new Profile(0,null,null,null,null,null,0,null);
+    //List<ImageBlob> blobList = new ArrayList<>();
+    Profile currentLogin = new Profile(0,null,null,null,null,null,0,null, null, null);
 
 
     // Root
@@ -28,16 +36,27 @@ public class DatingController {
         return "index";
     }
 
+    /*@RequestMapping("/img")
+    public String show(Model m) throws SQLException {
+        List<ImageBlob> showImage = rp.showBlob(2);
+        m.addAttribute("ImageBlob", showImage);
+        return "img";
+     }
+     */
+
+
+
+
     // Create profile
     @PostMapping("/createprofile")
-    public String createProfile(WebRequest createProfileData) throws SQLException {
+    public String createProfile(WebRequest createProfileData, @RequestParam("file") MultipartFile file) throws SQLException, IOException {
         int admin = 0;
         String name = createProfileData.getParameter("pName");
         String gender = createProfileData.getParameter("pGender");
         String email = createProfileData.getParameter("pEmail");
         String description = createProfileData.getParameter("pDescription");
         String kodeord = createProfileData.getParameter("pKodeord");
-        rp.createProfile(name, kodeord, gender, email, description, admin);
+        rp.createProfile(name, kodeord, gender, email, description, admin, file);
 /*
             if (rp.testUsernameViability("pEmail")) {
                 rp.createProfile(name, kodeord, gender, email, description, admin);
